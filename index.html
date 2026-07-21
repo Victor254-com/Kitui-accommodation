@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South Eastern Kenya University Hostel Booking Portal | 2026/2027</title>
+<style>
+    :root{
+        --mu-green:#006633; 
+        --mu-dark-green:#004d26;
+        --mu-gold:#FFCC00; 
+        --mu-light-gold:#fff2cc;
+        --bg:#f5f7fa;
+        --text-dark:#1a1a1a;
+        --border:#d1d5db;
+    }
+    *{box-sizing:border-box; margin:0; padding:0; font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;}
+    body{background:var(--bg); color:var(--text-dark); line-height:1.6;}
+
+    /* === TOP OFFICIAL BAR === */
+    .top-bar{background:#ffffff; border-bottom:1px solid var(--border); padding:10px 20px; font-size:13px; color:#555;}
+    .top-bar-content{max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+    .top-bar a{color:var(--mu-green); font-weight:600; text-decoration:none;}
+    .verified-badge{background:#e6fffa; color:#00796b; padding:3px 8px; border-radius:12px; font-size:11px; font-weight:bold;}
+
+    /* === MAIN HEADER === */
+    .main-header{background:var(--mu-green); color:white; padding:20px; text-align:center; border-bottom:6px solid var(--mu-gold);}
+    .header-content{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:15px; flex-wrap:wrap;}
+    .header-logo{width:70px; height:auto;}
+    .header-text h1{font-size:22px; font-weight:700; margin-bottom:4px;}
+    .header-text p{font-size:15px; opacity:0.9; margin-top:4px; font-weight:500;}
+
+    /* === NAVIGATION - NOW HIDDEN BY DEFAULT === */
+    .nav-bar{
+        background:#ffffff; 
+        padding:14px 15px; 
+        border-bottom:1px solid var(--border);
+        box-shadow:0 2px 5px rgba(0,0,0,0.05);
+        display: none;
+    }
+    .nav-content{
+        max-width:1100px; 
+        margin:0 auto; 
+        display:flex;
+        justify-content:space-around;
+        align-items:center;
+        gap:10px;
+    }
+    .nav-btn{
+        color:var(--mu-green); 
+        font-weight:700; 
+        text-decoration:none; 
+        font-size:15px; 
+        padding:8px 15px; 
+        border-radius:6px; 
+        text-align:center;
+        transition:all 0.25s ease;
+        cursor:pointer;
+    }
+    .nav-btn:hover{
+        background:var(--mu-light-gold);
+        transform:translateY(-1px);
+    }
+    .nav-btn.logout{color:#dc3545;}
+
+    .container{max-width:1100px; margin:25px auto; background:white; padding:30px 20px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.08);}
+    .login-box{max-width:420px; margin:40px auto; padding:35px; background:white; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.1); border-top:4px solid var(--mu-green); text-align:center;}
+    .login-logo{width:130px; display:block; margin:0 auto 15px;}
+    h2{color:var(--mu-green); margin-bottom:18px; border-left:4px solid var(--mu-gold); padding-left:12px; font-size:20px;}
+    label{display:block; margin:14px 0 6px; font-weight:600; font-size:14px; text-align:left;}
+    input{width:100%; padding:13px; border:1px solid var(--border); border-radius:6px; font-size:15px; transition:border 0.2s;}
+    input:focus{outline:none; border-color:var(--mu-green); box-shadow:0 0 0 3px rgba(0,102,51,0.1);}
+    .btn{background:var(--mu-green); color:white; padding:14px; border:none; border-radius:6px; cursor:pointer; font-size:16px; font-weight:bold; width:100%; margin-top:18px; transition:background 0.2s;}
+    .btn:hover{background:var(--mu-dark-green);}
+    .btn:disabled{background:#999; cursor:not-allowed;}
+    .btn-gold{background:var(--mu-gold); color:#000;}
+    .btn-gold:hover{background:#e6b800;}
+    .btn-secondary{background:#6c757d;}
+    .btn-secondary:hover{background:#5a6268;}
+    .small-note{font-size:12px; text-align:center; margin-top:12px; color:#666; line-height:1.5;}
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 35px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--mu-gold);
+    }
+    .dashboard-logo {
+        width: 110px;
+        height: auto;
+        margin-bottom: 12px;
+        display: inline-block;
+    }
+    .dashboard-header h2 {
+        color: var(--mu-green);
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+    }
+    .student-info {
+        font-size: 15px;
+        color: #333;
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin: 30px 0;
+        padding: 0 5px;
+        width: 100%;
+    }
+    .stat-card {
+        flex: 1;
+        min-height: 52px;
+        padding: 10px 8px;
+        border-radius: 8px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .stat-card h3 {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0 0 3px 0;
+        line-height:1;
+    }
+    .stat-card p {
+        font-size: 11px;
+        opacity: 0.95;
+        margin: 0;
+        line-height:1;
+        font-weight: 500;
+    }
+    .stat-card.booked {
+        background: linear-gradient(135deg, #c82333, #dc3545);
+    }
+    .stat-card.empty {
+        background: linear-gradient(135deg, var(--mu-green), #008040);
+        animation: elitePulse 2.2s infinite ease-in-out;
+    }
+    @keyframes elitePulse {
+        0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,102,51,0.3); filter: brightness(1); }
+        50% { transform: scale(1.03); box-shadow: 0 6px 25px rgba(0,102,51,0.55); filter: brightness(1.12); }
+        100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,102,51,0.3); filter: brightness(1); }
+    }
+
+    .section-title {
+        color: var(--mu-green);
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 22px;
+        padding-left: 12px;
+        border-left: 4px solid var(--mu-gold);
+    }
+
+    .hostel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 22px;
+    }
+    .hostel-card {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .hostel-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,102,51,0.12);
+        border-color: var(--mu-green);
+    }
+    .hostel-card.available {
+        border-left: 5px solid var(--mu-green);
+    }
+    .hostel-card.full {
+        opacity: 0.7;
+        background: #f8f9fa;
+        border-left: 5px solid #999;
+    }
+    .hostel-card h4 {
+        color: var(--mu-green);
+        font-size: 19px;
+        margin-bottom: 12px;
+        font-weight: 700;
+    }
+    .hostel-card p {
+        margin: 6px 0;
+        font-size:14px;
+        color:#444;
+    }
+    .vacancy {
+        font-weight:700;
+        color:var(--mu-green);
+        font-size:15px;
+        margin-top:8px;
+    }
+   
+    .scroll-agreement{height:380px; overflow-y:auto; border:1px solid var(--border); padding:25px; background:#fafafa; margin:15px 0; border-radius:6px;}
+    .notice-box{background:#fffbe6; border-color:var(--mu-gold);}
+    .scroll-agreement h3{text-align:center; color:var(--mu-green); margin-bottom:18px; font-size:20px;}
+    .scroll-agreement h4{margin-top:18px; margin-bottom:8px; font-size:16px;}
+    .scroll-agreement ul{margin-left:22px; margin-bottom:15px;}
+    .scroll-agreement li{margin-bottom:8px; font-size:14px;}
+    .agreement-checkbox{display:none; padding-top:15px; border-top:1px solid var(--border); margin-top:15px; animation: fadeIn 0.5s;}
+    @keyframes fadeIn {from{opacity:0;} to{opacity:1;}}
+    .scroll-hint{text-align:center; color:#dc3545; font-size:13px; font-weight:bold; margin-top:10px;}
+    .signatory{margin-top:25px; text-align:right; font-style:italic;}
+   
+    .alert{padding:14px; border-radius:6px; margin-bottom:18px; text-align:center; font-weight:bold; font-size:14px;}
+    .alert-error{background:#f8d7da; color:#721c24; border:1px solid #f5c6cb;}
+    .alert-success{background:#d4edda; color:#155724; border:1px solid #c3e6cb;}
+    .hidden{display:none !important;}
+    .loading{display:inline-block; width:16px; height:16px; border:2px solid #fff; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite; margin-right:8px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    .section-header {text-align:center; margin-bottom:28px;}
+    .section-header h2 {color:var(--mu-green); border:none; padding:0; margin:0; font-size:23px;}
+    .subtext {font-size:13px; color:#555; margin-top:6px;}
+
+    .fee-banner {background:linear-gradient(135deg, var(--mu-green), #008040); color:white; padding:22px; border-radius:8px; text-align:center; margin-bottom:28px;}
+    .fee-label {font-size:15px; margin:0; opacity:0.9;}
+    .fee-amount {font-size:34px; font-weight:800; margin:10px 0; letter-spacing:1px;}
+    .fee-note {font-size:12px; opacity:0.85; margin:0; line-height:1.5;}
+
+    .payment-card {background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:25px; margin-bottom:28px; box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+    .card-title {color:var(--mu-green); margin-top:0; margin-bottom:15px; font-size:19px;}
+    .card-intro {text-align:center; color:#444; margin-bottom:20px; font-size:14px;}
+
+    .payee-details {background:#f8f9fa; border-radius:6px; padding:18px; margin-bottom:22px; border-left:4px solid var(--mu-gold);}
+    .detail-row {display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #e9ecef; font-size:14px;}
+    .detail-row:last-child {border-bottom:none;}
+    .detail-label {font-weight:600; color:#333;}
+    .detail-value {font-weight:700; color:var(--mu-green); cursor:pointer; transition:all 0.2s; padding:2px 6px; border-radius:4px;}
+    .detail-value:hover {background:var(--mu-light-gold);}
+    .copy-hint {font-size:11px; font-weight:normal; color:#666; margin-left:8px;}
+
+    .steps-block {margin-bottom:18px;}
+    .steps-block h4 {margin-bottom:12px; color:#333; font-size:16px;}
+    .steps-list {padding-left:25px; margin:0;}
+    .steps-list li {margin-bottom:8px; font-size:14px; line-height:1.6;}
+
+    .alert-note {background:#fff3cd; border:1px solid #ffeeba; border-radius:6px; padding:14px; font-size:13px; color:#856404; margin-top:18px; line-height:1.5;}
+
+    .form-section {margin-bottom:22px;}
+    .form-title {color:var(--mu-green); margin-bottom:10px; font-size:18px;}
+    .form-note {font-size:13px; color:#666; margin-bottom:18px;}
+    .form-group {margin-bottom:16px;}
+    .form-group label {font-weight:600; font-size:14px; margin-bottom:6px; display:block;}
+    .required {color:#dc3545;}
+    .form-row-flex {display:flex; gap:18px; flex-wrap:wrap;}
+    .form-group.half {flex:1; min-width:220px;}
+    .form-group input {padding:12px; font-size:14px; border:1px solid var(--border); border-radius:6px; transition:border 0.2s;}
+    .form-group input:focus {outline:none; border-color:var(--mu-green); box-shadow:0 0 0 3px rgba(0,102,51,0.1);}
+
+    .button-group {display:flex; gap:15px; flex-wrap:wrap; margin-top:12px;}
+    .btn-primary {background:var(--mu-green); color:white; font-weight:bold; padding:14px; border:none; border-radius:6px; cursor:pointer; flex:1; min-width:230px; font-size:15px;}
+    .btn-primary:hover {background:var(--mu-dark-green);}
+    .btn-secondary {background:#6c757d; color:white; padding:14px; border:none; border-radius:6px; cursor:pointer; flex:1; min-width:130px; font-size:15px;}
+    .btn-secondary:hover {background:#5a6268;}
+
+    .confirmation-card {background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:25px; margin-bottom:22px; box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+    .confirmation-card h2 {color:var(--mu-green); border:none; padding:0; margin:0 0 15px 0; font-size:21px; text-align:center;}
+    .summary-row {display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f0f0f0; font-size:14px;}
+    .summary-row:last-child {border-bottom:none;}
+    .summary-row .label {font-weight:600; color:#444;}
+    .summary-row .value {font-weight:500; color:#222; text-align:right; max-width:60%;}
+    
+    .info-block {background:#e8f5e9; border-left:4px solid var(--mu-green); border-radius:6px; padding:18px; margin-bottom:22px; line-height:1.6;}
+    .action-steps {padding-left:28px; margin:0;}
+    .action-steps li {margin-bottom:12px; line-height:1.6; font-size:14px;}
+    .action-steps strong {color:var(--mu-green);}
+
+    .footer{background:#ffffff; border-top:3px solid var(--mu-gold); padding:25px 20px; margin-top:30px; font-size:13px; color:#555;}
+    .footer-content{max-width:1100px; margin:0 auto; text-align:center; line-height:1.7;}
+    .footer strong{color:var(--mu-green);}
+    .footer a{color:var(--mu-green); text-decoration:none; font-weight:600;}
+</style>
+</head>
+<body>
+
+<!-- TOP OFFICIAL BAR -->
+<div class="top-bar">
+    <div class="top-bar-content">
+        <span>🔒 Secure Connection | <span class="verified-badge">OFFICIAL PORTAL</span></span>
+        <span>Visit Main Website: <a href="https://www.seku.ac.ke" target="_blank">www.seku.ac.ke</a></span>
+    </div>
+</div>
+
+<!-- MAIN HEADER -->
+<div class="main-header">
+    <div class="header-content">    
+        <div class="header-text">
+            <h1>SOUTH EASTERN KENYA UNIVERSITY</h1>
+            <p>Kitui Town Campus | Hostel & Accommodation Booking Portal | Academic Year 2026/2027</p>
+        </div>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-bar" id="navBar">
+    <div class="nav-content">
+        <a href="#" class="nav-btn" onclick="showDashboard(); return false;">🏠 Dashboard</a>
+        <a href="mailto:accommodation@seku.ac.ke" class="nav-btn">📞 Help Desk</a>
+        <a href="#" class="nav-btn logout" onclick="logout(); return false;">🚪 Logout</a>
+    </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div class="container" id="loginPage">
+    <div class="login-box">
+        <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="login-logo">
+        <h2 style="text-align:center; border:none; padding:0;">Student Login</h2>
+        <div id="loginAlert"></div>
+        <form onsubmit="handleLogin(); return false;">
+            <label>Username / Admission Number
+                <input type="text" id="username" required>
+            </label>
+            <label>Password
+                <input type="password" id="password" placeholder="Enter admission number again" required>
+            </label>
+            <button class="btn">Sign In</button>
+            <p class="small-note">Use your Admission Number for both Username and Password<br>For assistance contact: <b>accommodation@seku.ac.ke</b></p>
+        </form>
+    </div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div class="container hidden" id="dashboardPage">
+    <div class="dashboard-header">
+        <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="dashboard-logo">
+        <h2>Welcome, ACCOMMODATION PORTAL</h2> 
+        <div class="student-info">
+            Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Undergraduate</strong>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card booked">
+            <h3 id="bookedCount">3471</h3>
+            <p>Vacancies Booked</p>
+        </div>
+        <div class="stat-card empty">
+            <h3 id="emptyCount">449</h3>
+            <p>Vacancies Remaining</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Select Hostel with Available Space</h3>
+    <div class="hostel-grid" id="hostelList"></div>
+</div>
+
+<!-- BOOKING PAGES -->
+<div class="container hidden" id="bookingPage">
+    <div id="alertBox"></div>
+
+    <div id="bookStep1">
+        <h2>Hostel Rules & Regulations: <span id="selectedHostelName1"></span></h2>
+        <form onsubmit="nextBookingStep(2); return false;">
+            <div class="scroll-agreement" id="rulesScroll" onscroll="checkScroll('rulesScroll','agreeRulesBox','btnRules')">
+                <h3>SOUTH EASTERN KENYA UNIVERSITY HOSTEL RULES & REGULATIONS 2026</h3>
+                <h4 style="color:var(--mu-green);">1. Eligibility & Allocation</h4>
+                <ul>
+                    <li>All regular students are eligible to apply for university accommodation.</li>
+                    <li>Priority during high demand: New students, First-years, Students with special needs.</li>
+                    <li>Allocation is strictly first-come-first-served upon successful payment of booking fee.</li>
+                </ul>
+                <h4 style="color:var(--mu-green);">2. Booking Procedure</h4>
+                <ul>
+                    <li>Non-refundable booking fee: Ksh 1,500 (deducted from semester accommodation fees).</li>
+                    <li>Submit your application via this official portal only.</li>
+                    <li>For inquiries: accommodation@seku.ac.ke or +254 758 903 000</li>
+                </ul>
+                <h4 style="color:var(--mu-green);">3. Safety & Conduct</h4>
+                <ul>
+                    <li>Respect all university staff and fellow students.</li>
+                    <li>Report lost keys immediately: Replacement fee Ksh 500.</li>
+                    <li>No unauthorized guests or visitors overnight.</li>
+                    <li>Cooking strictly in designated kitchen areas only.</li>
+                    <li>Quiet hours: 10:00PM – 6:00AM daily.</li>
+                    <li>University not liable for personal property loss or damage.</li>
+                </ul>
+                <h4 style="color:var(--mu-green);">4. Prohibited Items</h4>
+                <ul>
+                    <li>Unauthorized electrical appliances, heaters, cooking devices.</li>
+                    <li>Alcohol, illicit drugs, weapons, and flammable materials.</li>
+                    <li>Unapproved extension cables or power boards.</li>
+                </ul>
+                <h4 style="color:var(--mu-green);">5. Damages & Vacating</h4>
+                <ul>
+                    <li>All damages will be charged to the responsible student.</li>
+                    <li>Rooms must be fully vacated by end of every semester.</li>
+                    <li>Check-in and check-out inspections are mandatory.</li>
+                    <li>University reserves right to re-allocate or terminate accommodation for rule breach.</li>
+                </ul>
+                <p style="height:20px;"></p>
+                <div class="agreement-checkbox" id="agreeRulesBox">
+                    <label style="display:flex; align-items:flex-start; gap:10px;">
+                        <input type="checkbox" id="agreeRules" style="width:20px; height:20px;" onclick="document.getElementById('btnRules').disabled=!this.checked">
+                        <span><strong>I confirm:</strong> I have read, understood, and agree to comply fully with all South Eastern Kenya University Hostel Rules and Regulations.</span>
+                    </label>
+                </div>
+            </div>
+            <p class="scroll-hint" id="rulesHint">⬇️ Scroll to the very bottom to enable continue button ⬇️</p>
+            <button class="btn" id="btnRules" disabled>Continue to Next Step</button>
+            <button type="button" class="btn btn-secondary" onclick="backToDashboard()">← Return to Dashboard</button>
+        </form>
+    </div>
+
+    <div id="bookStep2" class="hidden">
+        <h2>Important Official Notice: <span id="selectedHostelName2"></span></h2>
+        <form onsubmit="nextBookingStep(3); return false;">
+            <div class="scroll-agreement notice-box" id="noticeScroll" onscroll="checkScroll('noticeScroll','agreeNoticeBox','btnNotice')">
+                <h3>OFFICIAL NOTICE TO ADMITTED STUDENTS</h3>
+                <p>Following the release of 2026 KUCCPS placement results, the <b>South Eastern Kenya University Accommodation Department</b> wishes to inform all first-year students that hostel spaces are limited and will be allocated on a first-come-first-served basis.</p><br>
+                <p>To secure your accommodation, you are required to pay a <b>mandatory booking fee of KES 1,500</b> via the official payment channel provided. This amount will be deducted from your total semester accommodation fees upon admission.</p><br>
+                <p>Students are advised to complete this process early to avoid missing out on hostel space. The balance of your accommodation fees must be settled within the first week of reporting to the university.</p><br>
+                <h4 style="color:var(--mu-green);">Official Procedure:</h4>
+                <ol>
+                    <li>Complete payment as instructed on the next page.</li>
+                    <li>Submit payment verification details correctly.</li>
+                    <li>Receive confirmation email within 12 working hours.</li>
+                    <li>Print and present your booking confirmation slip during admission.</li>
+                </ol>
+                <p style="color:#dc3545; font-weight:bold; text-align:center; margin:15px 0;">⚠️ DO NOT make payments to any other number or account not listed here.</p>
+                <div class="signatory">
+                    <br>Signed,<br>
+                    <b>Maureen Kyalo</b><br>
+                    Head of Accommodation & Student Welfare<br>
+                    South Eastern Kenya University
+                </div>
+                <p style="height:20px;"></p>
+                <div class="agreement-checkbox" id="agreeNoticeBox">
+                    <label style="display:flex; align-items:flex-start; gap:10px;">
+                        <input type="checkbox" id="agreeNotice" style="width:20px; height:20px;" onclick="document.getElementById('btnNotice').disabled=!this.checked">
+                        <span><strong>I confirm:</strong> I have read this official notice and understand that I must pay Ksh 1,500 via the provided channel to reserve my hostel space.</span>
+                    </label>
+                </div>
+            </div>
+            <p class="scroll-hint" id="noticeHint">⬇️ Scroll to the very bottom to enable continue button ⬇️</p>
+            <button class="btn btn-gold" id="btnNotice" disabled>Proceed to Payment Instructions</button>
+            <button type="button" class="btn btn-secondary" onclick="prevBookingStep(1)">← Back</button>
+        </form>
+    </div>
+
+    <div id="bookStep3" class="hidden">
+        <div class="section-header">
+            <h2>Hostel Booking Payment & Verification</h2>
+            <p class="subtext">South Eastern Kenya University | Official Secure Portal</p>
+        </div>
+        <div class="fee-banner">
+            <p class="fee-label">Mandatory Non-Refundable Booking Fee:</p>
+            <p class="fee-amount">Ksh 1,500.00</p>
+            <p class="fee-note">This amount forms part of your total semester accommodation charges</p>
+        </div>
+        <div class="payment-card">
+            <h3 class="card-title">📱 M-Pesa Payment Instructions</h3>
+            <p class="card-intro">Use ONLY these official details to make your payment:</p>
+            <div class="payee-details">
+                <div class="detail-row">
+                    <span class="detail-label">Paybill / Mobile Number:</span>
+                    <span class="detail-value" onclick="copyToClipboard('0758903057', this)">0758 903 057 <span class="copy-hint">📋 Click to copy</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Account Name:</span>
+                    <span class="detail-value">SEKU Accommodation - Maureen Kyalo</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Reference / Account No:</span>
+                    <span class="detail-value" id="refNumber"></span>
+                </div>
+            </div>
+            <div class="steps-block">
+                <h4>Step-by-Step Guide:</h4>
+                <ol class="steps-list">
+                    <li>Go to M-Pesa Menu → Select <strong>Lipa na M-Pesa</strong> → <strong>Send Money</strong></li>
+                    <li>Enter phone number: <strong onclick="copyToClipboard('0758903057', this)" style="cursor:pointer; color:var(--mu-green);">0758903057 📋</strong></li>
+                    <li>Enter amount: <strong>1500</strong></li>
+                    <li>Enter reference: <strong id="refNumber2"></strong></li>
+                    <li>Enter your M-Pesa PIN and confirm transaction</li>
+                </ol>
+            </div>
+            <div class="alert-note">
+                <strong>⚠️ IMPORTANT:</strong> Save your full M-Pesa message containing the transaction code immediately. You will need it for verification.
+            </div>
+        </div>
+        <div class="form-section">
+            <h3 class="form-title">📋 Submit Payment Verification Details</h3>
+            <p class="form-note">Enter information exactly as it appears on your admission letter and M-Pesa receipt</p>
+            <div class="form-group">
+                <label>M-Pesa Transaction Code <span class="required">*</span>
+                    <input type="text" id="mpesaCode" required>
+                </label>
+            </div>
+            <div class="form-row-flex">
+                <div class="form-group half">
+                    <label>Surname / Last Name <span class="required">*</span>
+                        <input type="text" id="surname" required>
+                    </label>
+                </div>
+                <div class="form-group half">
+                    <label>First & Middle Names <span class="required">*</span>
+                        <input type="text" id="otherNames" required>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Active Email Address <span class="required">*</span>
+                    <input type="email" id="emailAddr" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Faculty / School <span class="required">*</span>
+                    <input type="text" id="faculty" required>
+                </label>
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-primary" id="submitBtn" onclick="submitPayment()">Submit & Verify Payment</button>
+            <button class="btn btn-secondary" onclick="prevBookingStep(2)">← Return to Notice</button>
+        </div>
+    </div>
+
+    <div id="bookStep4" class="hidden">
+        <div class="alert alert-success">✅ Your Details Have Been Submitted Successfully!</div>
+        <div class="confirmation-card">
+            <h2>Booking Request Received</h2>
+            <hr style="border:1px solid var(--mu-gold); margin:15px 0;">
+            <div class="summary-row">
+                <span class="label">Selected Hostel:</span>
+                <span class="value" id="finalHostel"></span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Admission Number:</span>
+                <span class="value" id="finalAdmission"></span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Amount Paid:</span>
+                <span class="value">Ksh 1,500.00</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">M-Pesa Transaction Code:</span>
+                <span class="value" id="finalCode"></span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Student Full Name:</span>
+                <span class="value" id="finalName"></span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Email Address:</span>
+                <span class="value" id="finalEmail"></span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Faculty / School:</span>
+                <span class="value" id="finalFaculty"></span>
+            </div>
+        </div>
+        <div class="info-block">
+            <p style="font-weight:600; font-size:15px; line-height:1.7;">
+                Your payment verification is being processed. Within <strong>12 working hours</strong>, you will receive an official email containing your room allocation details and hostel clearance form. Print this document and present it to the Accommodation Office upon reporting for admission.
+            </p>
+        </div>
+        <div class="steps-block">
+            <h3 style="color:var(--mu-green); margin-bottom:12px;">📋 Next Steps</h3>
+            <ol class="action-steps">
+                <li><strong>Check your email:</strong> Inbox or Spam folder for your booking confirmation.</li>
+                <li><strong>Print your documents:</strong> Keep a printed copy of the clearance form.</li>
+                <li><strong>Report on time:</strong> Present your documents for official stamping during admission.</li>
+            </ol>
+        </div>
+        <button class="btn btn-primary" onclick="backToDashboard()">Return to Dashboard</button>
+    </div>
+</div>
+
+<!-- OFFICIAL FOOTER -->
+<div class="footer">
+    <div class="footer-content">
+        <p><strong>South Eastern Kenya University</strong> | P.O. Box 170-90200, Kitui, Kenya<br>
+        Tel: +254 758 903 000 | Email: <a href="mailto:info@seku.ac.ke">info@seku.ac.ke</a> | Accommodation: <a href="mailto:accommodation@seku.ac.ke">accommodation@seku.ac.ke</a><br>
+        © 2026 South Eastern Kenya University. All Rights Reserved. Official Secure Portal.</p>
+    </div>
+</div>
+
+<script>
+const bookedStudents = {};
+let hostelsDB = [
+    {id:1, name:"Tulip Hostel", total:500, booked:481, gender:"Female"},
+    {id:2, name:"Jacaranda Hostel", total:800, booked:780, gender:"Male"},
+    {id:3, name:"Acacia Hostel", total:700, booked:650, gender:"Male"},
+    {id:4, name:"Nanyuki Hostel", total:600, booked:580, gender:"Female"},
+    {id:5, name:"KEMU Towers", total:1320, booked:980, gender:"Mixed"}
+];
+let loggedInUser = null; 
+let selectedHostel = null;
+
+function copyToClipboard(text, el) {
+    navigator.clipboard.writeText(text).then(() => {
+        const original = el.innerHTML;
+        el.innerHTML = "✅ Copied!";
+        setTimeout(() => { el.innerHTML = original; }, 2000);
+    });
+}
+
+function checkScroll(scrollId, checkboxId, btnId){
+    const el = document.getElementById(scrollId);
+    const checkboxBox = document.getElementById(checkboxId);
+    const hint = scrollId.includes('rules')? document.getElementById('rulesHint') : document.getElementById('noticeHint');
+    if(el.scrollHeight <= el.clientHeight){
+        checkboxBox.style.display = 'block';
+        hint.style.display = 'none';
+        return;
+    }
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
+        checkboxBox.style.display = 'block';
+        hint.style.display = 'none';
+    }
+}
+
+function handleLogin(){
+    const user = document.getElementById('username').value.toUpperCase().trim();
+    const pass = document.getElementById('password').value.toUpperCase().trim();
+    const alertDiv = document.getElementById('loginAlert');
+    alertDiv.innerHTML = "";
+
+    if(user === "" || pass === ""){
+        alertDiv.innerHTML = "<div class='alert alert-error'>Please fill in both fields</div>";
+        return;
+    }
+    if(!user.endsWith("/2026") && !user.endsWith("/26")){
+        alertDiv.innerHTML = "<div class='alert alert-error'>Wrong username or password</div>";
+        return;
+    }
+    if(user !== pass){
+        alertDiv.innerHTML = "<div class='alert alert-error'>Wrong username or password</div>";
+        return;
+    }
+    if(bookedStudents[user]){
+        alertDiv.innerHTML = "<div class='alert alert-error'>You have already completed your hostel booking</div>";
+        return;
+    }
+    loggedInUser = { adm: user, name: "Student", course: "Undergraduate" };
+    showDashboard();
+}
+
+function showDashboard(){
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('dashboardPage').classList.remove('hidden');
+    document.getElementById('navBar').style.display = 'flex';
+    
+    document.getElementById('studentAdm').innerText = loggedInUser.adm;
+    
+    let totalBooked = hostelsDB.reduce((a,h) => a + h.booked, 0);
+    let totalEmpty = hostelsDB.reduce((a,h) => a + (h.total - h.booked), 0);
+    document.getElementById('bookedCount').innerText = totalBooked;
+    document.getElementById('emptyCount').innerText = totalEmpty;
+    
+    let html = "";
+    hostelsDB.forEach(h => {
+        let empty = h.total - h.booked;
+        let cls = empty > 0? "available" : "full";
+        html += `
+        <div class="hostel-card ${cls}">
+            <h4>${h.name} – ${h.gender} Hostel</h4>
+            <p>Total Capacity: ${h.total}</p>
+            <p>Already Booked: ${h.booked}</p>
+            <p class="vacancy">Spaces Remaining: ${empty}</p>
+            ${empty > 0? `<button class="btn" onclick="startBooking(${h.id})">Book This Hostel</button>` : `<button class="btn" disabled>❌ Fully Booked</button>`}
+        </div>`;
+    });
+    document.getElementById('hostelList').innerHTML = html;
+}
+
+function startBooking(hostelId){
+    selectedHostel = hostelsDB.find(h => h.id == hostelId);
+    document.getElementById('dashboardPage').classList.add('hidden');
+    document.getElementById('bookingPage').classList.remove('hidden');
+    document.getElementById('selectedHostelName1').innerText = selectedHostel.name;
+    document.getElementById('selectedHostelName2').innerText = selectedHostel.name;
+    document.getElementById('refNumber').innerText = loggedInUser.adm;
+    document.getElementById('refNumber2').innerText = loggedInUser.adm;
+    document.getElementById('agreeRulesBox').style.display = 'none';
+    document.getElementById('agreeNoticeBox').style.display = 'none';
+    document.getElementById('rulesHint').style.display = 'block';
+    document.getElementById('noticeHint').style.display = 'block';
+    document.getElementById('btnRules').disabled = true;
+    document.getElementById('btnNotice').disabled = true;
+    document.getElementById('alertBox').innerHTML = "";
+    showBookingStep(1);
+}
+
+function showBookingStep(n){
+    for(let i=1; i<=4; i++) document.getElementById('bookStep'+i).classList.add('hidden');
+    document.getElementById('bookStep'+n).classList.remove('hidden');
+}
+function nextBookingStep(n){ showBookingStep(n); }
+function prevBookingStep(n){ showBookingStep(n); }
+
+function submitPayment(){
+    const code = document.getElementById('mpesaCode').value.trim().toUpperCase();
+    const surname = document.getElementById('surname').value.trim();
+    const otherNames = document.getElementById('otherNames').value.trim();
+    const email = document.getElementById('emailAddr').value.trim();
+    const faculty = document.getElementById('faculty').value.trim();
+    const alertDiv = document.getElementById('alertBox');
+    const submitBtn = document.getElementById('submitBtn');
+
+    alertDiv.innerHTML = "";
+    if(code.length < 6){
+        alertDiv.innerHTML = "<div class='alert alert-error'>Enter a valid 6-character M-Pesa transaction code</div>";
+        return;
+    }
+    if(!surname || !otherNames || !email || !faculty){
+        alertDiv.innerHTML = "<div class='alert alert-error'>Please fill all required fields marked with *</div>";
+        return;
+    }
+    if(!email.includes('@') || !email.includes('.')){
+        alertDiv.innerHTML = "<div class='alert alert-error'>Enter a valid email address</div>";
+        return;
+    }
+
+    submitBtn.innerHTML = "<span class='loading'></span> Processing...";
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+        selectedHostel.booked += 1; 
+        bookedStudents[loggedInUser.adm] = true;
+        document.getElementById('finalHostel').innerText = selectedHostel.name; 
+        document.getElementById('finalAdmission').innerText = loggedInUser.adm;
+        document.getElementById('finalCode').innerText = code;
+        document.getElementById('finalName').innerText = surname + " " + otherNames;
+        document.getElementById('finalEmail').innerText = email;
+        document.getElementById('finalFaculty').innerText = faculty;
+        showBookingStep(4);
+    }, 2500);
+}
+
+function backToDashboard(){ 
+    document.getElementById('bookingPage').classList.add('hidden'); 
+    document.getElementById('alertBox').innerHTML = "";
+    showDashboard(); 
+}
+
+function logout(){
+    loggedInUser = null;
+    selectedHostel = null;
+    document.getElementById('navBar').style.display = 'none';
+    document.getElementById('dashboardPage').classList.add('hidden');
+    document.getElementById('bookingPage').classList.add('hidden');
+    document.getElementById('loginPage').classList.remove('hidden');
+    document.getElementById('username').value = "";
+    document.getElementById('password').value = "";
+    document.getElementById('loginAlert').innerHTML = "";
+}
+</script>
+
+</body>
+</html>
