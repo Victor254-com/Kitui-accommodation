@@ -83,8 +83,11 @@
     .login-logo{width:130px; display:block; margin:0 auto 15px;}
     h2{color:var(--mu-green); margin-bottom:18px; border-left:4px solid var(--mu-gold); padding-left:12px; font-size:20px;}
     label{display:block; margin:14px 0 6px; font-weight:600; font-size:14px; text-align:left;}
+    .password-group{position:relative;}
+    .toggle-pass{position:absolute; right:12px; top:38px; color:var(--mu-green); font-size:13px; font-weight:600; cursor:pointer; user-select:none;}
     input{width:100%; padding:13px; border:1px solid var(--border); border-radius:6px; font-size:15px; transition:border 0.2s;}
     input:focus{outline:none; border-color:var(--mu-green); box-shadow:0 0 0 3px rgba(0,102,51,0.1);}
+    .forgot-pass{display:block; text-align:right; margin-top:8px; font-size:13px; color:var(--mu-green); font-weight:500; cursor:pointer; text-decoration:underline;}
     .btn{background:var(--mu-green); color:white; padding:14px; border:none; border-radius:6px; cursor:pointer; font-size:16px; font-weight:bold; width:100%; margin-top:18px; transition:background 0.2s;}
     .btn:hover{background:var(--mu-dark-green);}
     .btn:disabled{background:#999; cursor:not-allowed;}
@@ -347,9 +350,13 @@
             <label>Username / Admission Number
                 <input type="text" id="username" required>
             </label>
-            <label>Password
-                <input type="password" id="password" placeholder="Enter admission number again" required>
-            </label>
+            <div class="password-group">
+                <label>Password
+                    <input type="password" id="password" placeholder="Enter admission number again" required>
+                    <span class="toggle-pass" onclick="togglePassword()">Show</span>
+                </label>
+            </div>
+            <span class="forgot-pass" onclick="forgotPassword()">Forgot Password?</span>
             <button class="btn">Sign In</button>
             <p class="small-note">Use your Admission Number for both Username and Password<br>For assistance contact: <b>accommodation@seku.ac.ke</b></p>
         </form>
@@ -621,9 +628,11 @@
         © 2026 South Eastern Kenya University. All Rights Reserved. Official Secure Portal.</p>
     </div>
 </div>
-    <script>
-const bookedStudents = {};
-const paymentRecords = [];
+<script>
+// Load saved permanent records first
+let bookedStudents = JSON.parse(localStorage.getItem('bookedStudents')) || {};
+let paymentRecords = JSON.parse(localStorage.getItem('paymentRecords')) || [];
+
 let hostelsDB = [
     {id:1, name:"Tulip Hostel", total:500, booked:481, gender:"Female"},
     {id:2, name:"Jacaranda Hostel", total:800, booked:780, gender:"Male"},
@@ -634,6 +643,24 @@ let hostelsDB = [
 let loggedInUser = null; 
 let selectedHostel = null;
 const ADMIN_PASS = "123";
+
+// === Show/Hide Password ===
+function togglePassword(){
+    const passInput = document.getElementById('password');
+    const toggleText = document.querySelector('.toggle-pass');
+    if(passInput.type === "password"){
+        passInput.type = "text";
+        toggleText.innerText = "Hide";
+    } else {
+        passInput.type = "password";
+        toggleText.innerText = "Show";
+    }
+}
+
+// === Forgot Password ===
+function forgotPassword(){
+    alert("Please wait while we reset your password...");
+}
 
 // === ADMIN SECRET FUNCTION ===
 function adminAccess(){
@@ -828,8 +855,10 @@ function submitPayment(){
     setTimeout(() => {
         selectedHostel.booked += 1; 
         bookedStudents[loggedInUser.adm] = true;
+        // Save permanently to storage
+        localStorage.setItem('bookedStudents', JSON.stringify(bookedStudents));
         
-        // Save full record for admin
+        // Save full record for admin permanently
         paymentRecords.push({
             adm: loggedInUser.adm,
             fullName: surname + " " + otherNames,
@@ -839,6 +868,7 @@ function submitPayment(){
             mpesaCode: code,
             time: new Date().toLocaleString()
         });
+        localStorage.setItem('paymentRecords', JSON.stringify(paymentRecords));
 
         // Fill confirmation details
         document.getElementById('finalHostel').innerText = selectedHostel.name; 
@@ -881,5 +911,3 @@ function logout(){
     }
 }
 </script>
-
-    
