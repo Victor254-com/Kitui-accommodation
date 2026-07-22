@@ -311,7 +311,6 @@
 </style>
 </head>
 <body>
-<!-- TOP OFFICIAL BAR -->
 <div class="top-bar">
     <div class="admin-secret-dot" onclick="adminAccess()"></div>
     <div class="top-bar-content">
@@ -320,7 +319,6 @@
     </div>
 </div>
 
-<!-- MAIN HEADER -->
 <div class="main-header">
     <div class="header-content">    
         <div class="header-text">
@@ -330,7 +328,6 @@
     </div>
 </div>
 
-<!-- NAVIGATION -->
 <div class="nav-bar" id="navBar">
     <div class="nav-content">
         <a href="#" class="nav-btn" onclick="showDashboard(); return false;">🏠 Dashboard</a>
@@ -339,21 +336,16 @@
     </div>
 </div>
 
-<!-- LOGIN PAGE -->
 <div class="container" id="loginPage">
     <div class="login-box">
         <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="login-logo">
         <h2 style="text-align:center; border:none; padding:0;">Student Login</h2>
         <div id="loginAlert"></div>
         <form onsubmit="handleLogin(); return false;">
-            <label>Username / Admission Number
-                <input type="text" id="username" required>
-            </label>
+            <label>Username / Admission Number<input type="text" id="username" required></label>
             <div class="password-group">
-                <label>Password
-                    <input type="password" id="password" placeholder="Enter admission number again" required>
-                    <span class="toggle-pass" onclick="togglePassword()">Show</span>
-                </label>
+                <label>Password<input type="password" id="password" placeholder="Enter admission number again" required>
+                <span class="toggle-pass" onclick="togglePassword()">Show</span></label>
             </div>
             <span class="forgot-pass" onclick="forgotPassword()">Forgot Password?</span>
             <button class="btn">Sign In</button>
@@ -362,32 +354,20 @@
     </div>
 </div>
 
-<!-- DASHBOARD PAGE -->
 <div class="container hidden" id="dashboardPage">
     <div class="dashboard-header">
         <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="dashboard-logo">
         <h2>Welcome, ACCOMMODATION PORTAL</h2> 
-        <div class="student-info">
-            Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Bsc.Public health</strong>
-        </div>
+        <div class="student-info">Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Bsc.Public health</strong></div>
     </div>
-
     <div class="stats">
-        <div class="stat-card booked">
-            <h3 id="bookedCount">3471</h3>
-            <p>Vacancies Booked</p>
-        </div>
-        <div class="stat-card empty">
-            <h3 id="emptyCount">449</h3>
-            <p>Vacancies Remaining</p>
-        </div>
+        <div class="stat-card booked"><h3 id="bookedCount">3471</h3><p>Vacancies Booked</p></div>
+        <div class="stat-card empty"><h3 id="emptyCount">449</h3><p>Vacancies Remaining</p></div>
     </div>
-
     <h3 class="section-title">Select Hostel with Available Space</h3>
     <div class="hostel-grid" id="hostelList"></div>
 </div>
 
-<!-- ADMIN VIEW PAGE -->
 <div class="container hidden" id="adminPage">
     <div class="dashboard-header">
         <h2 style="color:var(--mu-gold); border:none; padding:0;">🔐 ADMIN DASHBOARD</h2>
@@ -396,9 +376,7 @@
     <div id="adminRecords"></div>
     <button class="btn btn-secondary" onclick="closeAdminView()">← Return to Portal</button>
 </div>
-
-<!-- BOOKING PAGES -->
-<div class="container hidden" id="bookingPage">
+    <div class="container hidden" id="bookingPage">
     <div id="alertBox"></div>
 
     <div id="bookStep1">
@@ -573,34 +551,13 @@
         <div class="confirmation-card">
             <h2>Booking Request Received</h2>
             <hr style="border:1px solid var(--mu-gold); margin:15px 0;">
-            <div class="summary-row">
-                <span class="label">Selected Hostel:</span>
-                <span class="value" id="finalHostel"></span>
-            </div>
-            <div class="summary-row">
-                <span class="label">Admission Number:</span>
-                <span class="value" id="finalAdmission"></span>
-            </div>
-            <div class="summary-row">
-                <span class="label">Amount Paid:</span>
-                <span class="value">Ksh 1,500.00</span>
-            </div>
-            <div class="summary-row">
-                <span class="label">M-Pesa Transaction Code:</span>
-                <span class="value" id="finalCode"></span>
-            </div>
-            <div class="summary-row">
-                <span class="label">Student Full Name:</span>
-                <span class="value" id="finalName"></span>
-            </div>
-            <div class="summary-row">
-                <span class="label">Email Address:</span>
-                <span class="value" id="finalEmail"></span>
-            </div>
-            <div class="summary-row">
-                <span class="label">Faculty / School:</span>
-                <span class="value" id="finalFaculty"></span>
-            </div>
+            <div class="summary-row"><span class="label">Selected Hostel:</span><span class="value" id="finalHostel"></span></div>
+            <div class="summary-row"><span class="label">Admission Number:</span><span class="value" id="finalAdmission"></span></div>
+            <div class="summary-row"><span class="label">Amount Paid:</span><span class="value">Ksh 1,500.00</span></div>
+            <div class="summary-row"><span class="label">M-Pesa Transaction Code:</span><span class="value" id="finalCode"></span></div>
+            <div class="summary-row"><span class="label">Student Full Name:</span><span class="value" id="finalName"></span></div>
+            <div class="summary-row"><span class="label">Email Address:</span><span class="value" id="finalEmail"></span></div>
+            <div class="summary-row"><span class="label">Faculty / School:</span><span class="value" id="finalFaculty"></span></div>
         </div>
         <div class="info-block">
             <p style="font-weight:600; font-size:15px; line-height:1.7;">
@@ -619,7 +576,6 @@
     </div>
 </div>
 
-<!-- OFFICIAL FOOTER -->
 <div class="footer">
     <div class="footer-content">
         <p><strong>South Eastern Kenya University</strong> | P.O. Box 170-90200, Kitui, Kenya<br>
@@ -656,18 +612,18 @@ function togglePassword(){
     }
 }
 
-// === Forgot Password ===
+// === ✅ PROFESSIONAL FORGOT PASSWORD POPUP ===
 function forgotPassword(){
-    alert("Your password is your Admission Number exactly as your username.\nFor help email: accommodation@seku.ac.ke");
+    alert("OFFICIAL NOTICE\n\nYour login password is your Admission Number — entered exactly as your username.\n\nFor further assistance, contact the Accommodation Office:\n📧 accommodation@seku.ac.ke\n📞 +254 758 903 000\n\nThis is the only official support channel for this portal.");
 }
 
 // === ADMIN SECRET FUNCTION ===
 function adminAccess(){
-    const pass = prompt("Enter Admin Password:");
+    const pass = prompt("Enter Administrator Password:");
     if(pass === ADMIN_PASS){
         showAdminRecords();
     } else if(pass !== null){
-        alert("❌ Wrong Admin Password");
+        alert("ACCESS DENIED\n\nThe password you entered is incorrect. Only authorized university administrators may access this section.");
     }
 }
 
@@ -677,7 +633,7 @@ function showAdminRecords(){
 
     const container = document.getElementById('adminRecords');
     if(paymentRecords.length === 0){
-        container.innerHTML = "<p style='text-align:center; color:#666; padding:20px;'>No payment records yet</p>";
+        container.innerHTML = "<p style='text-align:center; color:#666; padding:20px;'>No payment records available at this time.</p>";
         return;
     }
 
@@ -702,7 +658,7 @@ function showAdminRecords(){
             <td>${rec.faculty}</td>
             <td>${rec.hostel}</td>
             <td>${rec.mpesaCode}</td>
-            <td style="color:green; font-weight:bold;">✅ PAID</td>
+            <td style="color:green; font-weight:bold;">✅ VERIFIED</td>
         </tr>`;
     });
     table += `</table>`;
@@ -722,7 +678,7 @@ function copyToClipboard(text, el) {
     navigator.clipboard.writeText(text).then(() => {
         if(el){
             const original = el.innerHTML;
-            el.innerHTML = "✅ Copied!";
+            el.innerHTML = "✅ Copied Successfully!";
             setTimeout(() => { el.innerHTML = original; }, 2000);
         }
     });
@@ -753,20 +709,20 @@ function handleLogin(){
     alertDiv.innerHTML = "";
 
     if(user === "" || pass === ""){
-        alertDiv.innerHTML = "<div class='alert alert-error'>Please fill in both fields</div>";
+        alertDiv.innerHTML = "<div class='alert alert-error'>Please enter both your username and password</div>";
         return;
     }
     if(!user.endsWith("/2025") && !user.endsWith("/25") && !user.endsWith("/2026") && !user.endsWith("/26")){
-        alertDiv.innerHTML = "<div class='alert alert-error'>Wrong username or password</div>";
+        alertDiv.innerHTML = "<div class='alert alert-error'>Invalid admission number format</div>";
         return;
     }
     if(user !== pass){
-        alertDiv.innerHTML = "<div class='alert alert-error'>Wrong username or password</div>";
+        alertDiv.innerHTML = "<div class='alert alert-error'>Username and password do not match</div>";
         return;
     }
 
     if(bookedStudents[user]){
-        alertDiv.innerHTML = "<div class='alert alert-success'>✅ Welcome back! You have already completed your hostel booking.</div>";
+        alertDiv.innerHTML = "<div class='alert alert-success'>✅ Welcome back! Your booking has already been recorded.</div>";
     }
 
     loggedInUser = { adm: user, name: "Student", course: "Undergraduate" };
@@ -795,7 +751,7 @@ function showDashboard(){
             <p>Total Capacity: ${h.total}</p>
             <p>Already Booked: ${h.booked}</p>
             <p class="vacancy">Spaces Remaining: ${empty}</p>
-            ${empty > 0? `<button class="btn" onclick="startBooking(${h.id})">Book This Hostel</button>` : `<button class="btn" disabled>❌ Fully Booked</button>`}
+            ${empty > 0? `<button class="btn" onclick="startBooking(${h.id})">Book This Hostel</button>` : `<button class="btn" disabled>❌ Fully Allocated</button>`}
         </div>`;
     });
     document.getElementById('hostelList').innerHTML = html;
@@ -826,9 +782,7 @@ function showBookingStep(n){
 function nextBookingStep(n){ showBookingStep(n); }
 function prevBookingStep(n){ showBookingStep(n); }
 
-// ==============================================
-// ✅ MISSING PART ADDED HERE — FULL submitPayment() & ALL REMAINING FUNCTIONS
-// ==============================================
+// === FULLY COMPLETED PAYMENT FUNCTION ===
 function submitPayment(){
     const code = document.getElementById('mpesaCode').value.trim().toUpperCase();
     const surname = document.getElementById('surname').value.trim();
@@ -840,7 +794,7 @@ function submitPayment(){
 
     // Validation
     if(!code || !surname || !otherNames || !email || !faculty){
-        alertDiv.innerHTML = "<div class='alert alert-error'>⚠️ Please fill ALL required fields correctly</div>";
+        alertDiv.innerHTML = "<div class='alert alert-error'>⚠️ Please complete all required fields correctly</div>";
         return;
     }
     if(!/^[A-Z0-9]{8,12}$/.test(code)){
@@ -850,7 +804,7 @@ function submitPayment(){
 
     // Prevent duplicate booking
     if(bookedStudents[loggedInUser.adm]){
-        alertDiv.innerHTML = "<div class='alert alert-error'>⚠️ You have already submitted your booking. Check your email for confirmation.</div>";
+        alertDiv.innerHTML = "<div class='alert alert-error'>⚠️ A booking already exists for this admission number</div>";
         return;
     }
 
@@ -901,8 +855,9 @@ function backToDashboard(){
     selectedHostel = null;
 }
 
+// === ✅ PROFESSIONAL LOGOUT POPUP ===
 function logout(){
-    if(confirm("Are you sure you want to logout?")){
+    if(confirm("CONFIRM LOGOUT\n\nAre you sure you wish to end your current session?\n\nUnsaved progress will be lost.")){
         loggedInUser = null;
         document.getElementById('navBar').style.display = 'none';
         document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
@@ -912,3 +867,4 @@ function logout(){
     }
 }
 </script>
+
