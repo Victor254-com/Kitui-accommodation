@@ -75,7 +75,7 @@
     }
 
     /* === SIDEBAR === */
-    .sidebar{
+    sidebar{
         position:fixed; top:0; left:-280px; width:260px; height:100vh; background:white; box-shadow:2px 0 10px rgba(0,0,0,0.15);
         transition:left 0.3s ease; z-index:9999; padding-top:70px;
     }
@@ -342,15 +342,21 @@
 </div>
 
 <!-- SIDEBAR OVERLAY & MENU -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+ <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
-    <div class="sidebar-menu">
-        <a href="#" onclick="showBookingStatus(); return false;">📋 Booking Status</a>
-        <a href="#" onclick="showPaymentHistory(); return false;">🧾 Payment History</a>
-        <a href="#" onclick="showDashboard(); return false;">🏨 Browse Hostels</a>
-        <a href="mailto:accommodation@seku.ac.ke">📞 Help Desk</a>
-        <a href="#" onclick="logout(); return false;" class="logout">🚪 Logout</a>
+    <div class="sidebar-header">
+        <img src="seku.jpg" alt="SEKU Logo">
+         <h3>SOUTH EASTERN KENYA UNIVERSITY</h3>
+        <p>Accommodation Portal 2026/2027</p>
     </div>
+    <div class="sidebar-menu">
+         <a href="#" onclick="showBookingStatus(); return false;"><span class="icon">📋</span> Booking Status</a>
+        <a href="#" onclick="showPaymentHistory(); return false;"><span class="icon">🧾</span> Payment History</a>
+         <a href="#" onclick="showDashboard(); return false;"><span class="icon">🏨</span> Browse Hostels</a>
+         <a href="mailto:accommodation@seku.ac.ke"><span class="icon">📞</span> Help Desk</a>
+        <a href="#" onclick="logout(); return false;" class="logout"><span class="icon">🚪</span> Logout</a>
+     </div>
+ </div>
 </div>
 <div class="container" id="loginPage">
     <div class="login-box">
