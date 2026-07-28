@@ -1,4 +1,5 @@
-Where now <!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -108,35 +109,34 @@ Where now <!DOCTYPE html>
     .btn-gold:hover{background:#b8860b; color:white;}
     .btn-secondary{background:#6c757d;}
     .btn-secondary:hover{background:#5a6268;}
-    .small-note{font-size:12px; text-align:center; margin-top:12px; color:#666; line-height:1.5;}    
-/* ADD THIS HERE - LINE 116.5 */
-.welcome-banner{
-    background: linear-gradient(135deg, var(--seku-green), var(--seku-dark-green));
-    color: white;
-    text-align: center;
-    padding: 18px 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border-bottom: 4px solid var(--seku-gold);
-    box-shadow: 0 3px 10px rgba(0,85,34,0.2);
-}
-.welcome-banner h2{
-    font-size: 22px;
-    font-weight: 800;
-    margin: 0 0 5px 0;
-    color: var(--seku-gold);
-    border: none;
-    padding: 0;
-}
-.welcome-banner p{
-    font-size: 13px;
-    opacity: 0.9;
-    margin: 0;
-    font-weight: 500;
-}
+    .small-note{font-size:12px; text-align:center; margin-top:12px; color:#666; line-height:1.5;}
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 35px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--seku-gold);
+    }
+    .dashboard-logo {
+        width: 110px;
+        height: auto;
+        margin-bottom: 12px;
+        display: inline-block;
+    }
+    .dashboard-header h2 {
+        color: var(--seku-green);
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+    }
+    .student-info {
+        font-size: 15px;
+        color: #333;
+        margin-top: 10px;
+        font-weight: 600;
+    }
 
-.dashboard-logo {  /* <-- your existing line 117 starts here */
-    width: 110px;
     .stats {
         display: flex;
         justify-content: center;
@@ -376,9 +376,6 @@ Where now <!DOCTYPE html>
  <div class="dash-hamburger" id="dashHamburger">Dashboard</div>
 
     <div class="dashboard-header">
-        <div class="welcome-banner">
-    <h2>Welcome, Accommodation Portal</h2>
-</div>
         <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="dashboard-logo">
         
         <div class="student-info">Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Undergraduate</strong></div>
@@ -493,11 +490,12 @@ Where now <!DOCTYPE html>
                 <p>This booking fee will be deducted from your total semester accommodation fee. The remaining balance of the semester accommodation fee must be cleared towards the end of the semester.</p>
 
                 <h4>3. Reason for Staggered Payment</h4>
-                <p>This milestone decision to allow payment of the booking fee first, and the balance towards the end of the semister.</p>
+                <p>This milestone decision to allow payment of the booking fee first, and the balance towards the end of the semester has been made to assist students who may experience financial difficulties in paying the full accommodation fee on first weeks of reporting.</p>
 
                 <h4>4. Confirmation Process</h4>
                 <p>Upon successful payment of the Ksh 1,500 booking fee to the official Accommodation Office account under Madam Maureen Kyalo, you will receive an official email within <strong>12 working hours</strong> containing your Hostel Booking Confirmation Ticket.</p>
-                <p>This ticket must be printed and presented to the Accommodation Office for verification and room allocation upon reporting.</p>
+                <p>This ticket must be printed and presented to the Accommodation Office for verification and room allocation upon student reporting.</p>
+
                 <h4>5. Important Reminder</h4>
                 <p>Failure to book early may result in loss of university accommodation. Spaces will be allocated on a <strong>first-come, first-served basis</strong> until all vacancies are fully occupied.</p>
 
@@ -510,7 +508,7 @@ Where now <!DOCTYPE html>
                         <li>Complete payment as instructed on the next page.</li>
                         <li>Submit payment verification details correctly.</li>
                         <li>Receive confirmation email within 12 working hours.</li>
-                        <li>Print and present your booking confirmation slip on reporting.</li>
+                        <li>Print and present your booking confirmation slip during admission.</li>
                     </ol>
                     <p class="warning" style="color:#dc3545; font-weight:bold; margin-top:15px;">⚠️ DO NOT make payments to any other number or account not listed here.</p>
                 </div>
@@ -810,35 +808,36 @@ function handleLogin(){
 
     loggedInUser = { adm: user, name: "Student", course: "Undergraduate" };
     showDashboard();
-    }
+}
+
 function showDashboard(){
     closeSidebar();
-    document.querySelectorAll('.container').forEach(el => el.classList.add('hidden')); // <-- ADD THIS LINE
-    
+    document.getElementById('loginPage').classList.add('hidden');
     document.getElementById('dashboardPage').classList.remove('hidden');
     
     document.getElementById('studentAdm').innerText = loggedInUser.adm;
-
+    
     let totalBooked = hostelsDB.reduce((a,h) => a + h.booked, 0);
     let totalEmpty = hostelsDB.reduce((a,h) => a + (h.total - h.booked), 0);
     document.getElementById('bookedCount').innerText = totalBooked;
     document.getElementById('emptyCount').innerText = totalEmpty;
-
+    
     let html = "";
     hostelsDB.forEach(h => {
         let empty = h.total - h.booked;
-        let cls = empty > 0 ? "available" : "full";
+        let cls = empty > 0? "available" : "full";
         html += `
         <div class="hostel-card ${cls}">
-        <h4>${h.name} - ${h.gender} Hostel</h4>
-        <p>Total Capacity: ${h.total}</p>
-        <p>Already Booked: ${h.booked}</p>
-        <p class="vacancy">Spaces Remaining: ${empty}</p>
-        ${empty > 0 ? `<button class="btn" onclick="startBooking(${h.id})">Book This</button>` : `<button class="btn" disabled>❌ Fully Allocated</button>`}
+            <h4>${h.name} – ${h.gender} Hostel</h4>
+            <p>Total Capacity: ${h.total}</p>
+            <p>Already Booked: ${h.booked}</p>
+            <p class="vacancy">Spaces Remaining: ${empty}</p>
+            ${empty > 0? `<button class="btn" onclick="startBooking(${h.id})">Book This Hostel</button>` : `<button class="btn" disabled>❌ Fully Allocated</button>`}
         </div>`;
     });
     document.getElementById('hostelList').innerHTML = html;
 }
+
 // === NEW MENU ITEM FUNCTIONS ===
 function showBookingStatus(){
     closeSidebar();
