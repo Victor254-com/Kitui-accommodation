@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>South Eastern Kenya University Hostel Booking Portal | 2026/2027</title>
 <style>
+    /* === OFFICIAL SEKU BRAND COLORS (MATCHING UNIVERSITY WEBSITE) === */
     :root{
-        --mu-green:#006633; 
-        --mu-dark-green:#004d26;
-        --mu-gold:#FFCC00; 
-        --mu-light-gold:#fff2cc;
-        --bg:#f5f7fa;
+        --seku-green:#005522; 
+        --seku-dark-green:#003d16;
+        --seku-gold:#D4AF37; 
+        --seku-light-gold:#fff9e6;
+        --seku-light-green:#e6f4ea;
+        --bg:#f8f9fa;
         --text-dark:#1a1a1a;
         --border:#d1d5db;
     }
@@ -20,8 +22,8 @@
     /* === TOP OFFICIAL BAR === */
     .top-bar{background:#ffffff; border-bottom:1px solid var(--border); padding:10px 20px; font-size:13px; color:#555; position:relative;}
     .top-bar-content{max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
-    .top-bar a{color:var(--mu-green); font-weight:600; text-decoration:none;}
-    .verified-badge{background:#e6fffa; color:#00796b; padding:3px 8px; border-radius:12px; font-size:11px; font-weight:bold;}
+    .top-bar a{color:var(--seku-green); font-weight:600; text-decoration:none;}
+    .verified-badge{background:var(--seku-light-green); color:var(--seku-green); padding:3px 8px; border-radius:12px; font-size:11px; font-weight:bold;}
 
     /* === HIDDEN ADMIN DOT === */
     .admin-secret-dot{
@@ -39,68 +41,79 @@
     }
 
     /* === MAIN HEADER === */
-    .main-header{background:var(--mu-green); color:white; padding:20px; text-align:center; border-bottom:6px solid var(--mu-gold);}
+    .main-header{background:var(--seku-green); color:white; padding:20px; text-align:center; border-bottom:6px solid var(--seku-gold);}
     .header-content{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:15px; flex-wrap:wrap;}
     .header-text h1{font-size:22px; font-weight:700; margin-bottom:4px;}
     .header-text p{font-size:15px; opacity:0.9; margin-top:4px; font-weight:500;}
 
-    /* === NAVIGATION === */
-    .nav-bar{
-        background:#ffffff; 
-        padding:14px 15px; 
-        border-bottom:1px solid var(--border);
-        box-shadow:0 2px 5px rgba(0,0,0,0.05);
-        display: none;
+/* === NEW DASHBOARD BUTTON === */
+    .dash-hamburger{
+        position:absolute; 
+        left:15px; 
+        top:15px;
+        background:var(--seku-green); /* Green background */
+        color:white;                  /* White text */
+        font-weight:700;
+        font-size:14px;
+        padding:8px 14px;
+        border-radius:6px;
+        cursor:pointer; 
+        z-index:999;
+        border:2px solid var(--seku-gold); /* Gold border to match SEKU */
+        box-shadow:0 2px 6px rgba(0,0,0,0.2);
+        transition:0.2s;
+        display:none; /* hidden on desktop */
     }
-    .nav-content{
-        max-width:1100px; 
-        margin:0 auto; 
-        display:flex;
-        justify-content:space-around;
-        align-items:center;
-        gap:10px;
-    }
-    .nav-btn{
-        color:var(--mu-green); 
-        font-weight:700; 
-        text-decoration:none; 
-        font-size:15px; 
-        padding:8px 15px; 
-        border-radius:6px; 
-        text-align:center;
-        transition:all 0.25s ease;
-        cursor:pointer;
-    }
-    .nav-btn:hover{
-        background:var(--mu-light-gold);
+    .dash-hamburger:hover{
+        background:var(--seku-dark-green);
         transform:translateY(-1px);
     }
-    .nav-btn.logout{color:#dc3545;}
+    
+    /* Show only on mobile/dashboard */
+    @media screen and (max-width:768px){
+        #dashboardPage .dash-hamburger{display:block;}
+    }
 
-    .container{max-width:1100px; margin:25px auto; background:white; padding:30px 20px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.08);}
-    .login-box{max-width:420px; margin:40px auto; padding:35px; background:white; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.1); border-top:4px solid var(--mu-green); text-align:center;}
+    /* === SIDEBAR === */
+    .sidebar{
+        position:fixed; top:0; left:-280px; width:260px; height:100vh; background:white; box-shadow:2px 0 10px rgba(0,0,0,0.15);
+        transition:left 0.3s ease; z-index:9999; padding-top:70px;
+    }
+    .sidebar.active{left:0;}
+    .sidebar-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:9998; display:none;}
+    .sidebar-overlay.active{display:block;}
+    .sidebar-menu a{
+        display:block; padding:14px 25px; color:var(--text-dark); text-decoration:none; font-size:15px; font-weight:500;
+        border-bottom:1px solid #f0f0f0; transition:0.2s;
+    }
+    .sidebar-menu a:hover{background:var(--seku-light-green); color:var(--seku-green); padding-left:30px;}
+    .sidebar-menu a.logout{color:#dc3545; font-weight:600;}
+
+    .nav-bar{display:none;} /* HIDE OLD NAVBAR COMPLETELY */
+
+    .container{max-width:1100px; margin:25px auto; background:white; padding:30px 20px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.08); position:relative;}
+    .login-box{max-width:420px; margin:40px auto; padding:35px; background:white; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.1); border-top:4px solid var(--seku-green); text-align:center;}
     .login-logo{width:130px; display:block; margin:0 auto 15px;}
-    h2{color:var(--mu-green); margin-bottom:18px; border-left:4px solid var(--mu-gold); padding-left:12px; font-size:20px;}
+    h2{color:var(--seku-green); margin-bottom:18px; border-left:4px solid var(--seku-gold); padding-left:12px; font-size:20px;}
     label{display:block; margin:14px 0 6px; font-weight:600; font-size:14px; text-align:left;}
     .password-group{position:relative;}
-    .toggle-pass{position:absolute; right:12px; top:38px; color:var(--mu-green); font-size:13px; font-weight:600; cursor:pointer; user-select:none;}
+    .toggle-pass{position:absolute; right:12px; top:38px; color:var(--seku-green); font-size:13px; font-weight:600; cursor:pointer; user-select:none;}
     input{width:100%; padding:13px; border:1px solid var(--border); border-radius:6px; font-size:15px; transition:border 0.2s;}
-    input:focus{outline:none; border-color:var(--mu-green); box-shadow:0 0 0 3px rgba(0,102,51,0.1);}
-    .forgot-pass{display:block; text-align:right; margin-top:8px; font-size:13px; color:var(--mu-green); font-weight:500; cursor:pointer; text-decoration:underline;}
-    .btn{background:var(--mu-green); color:white; padding:14px; border:none; border-radius:6px; cursor:pointer; font-size:16px; font-weight:bold; width:100%; margin-top:18px; transition:background 0.2s;}
-    .btn:hover{background:var(--mu-dark-green);}
+    input:focus{outline:none; border-color:var(--seku-green); box-shadow:0 0 0 3px rgba(0,85,34,0.1);}
+    .forgot-pass{display:block; text-align:right; margin-top:8px; font-size:13px; color:var(--seku-green); font-weight:500; cursor:pointer; text-decoration:underline;}
+    .btn{background:var(--seku-green); color:white; padding:14px; border:none; border-radius:6px; cursor:pointer; font-size:16px; font-weight:bold; width:100%; margin-top:18px; transition:background 0.2s;}
+    .btn:hover{background:var(--seku-dark-green);}
     .btn:disabled{background:#999; cursor:not-allowed;}
-    .btn-gold{background:var(--mu-gold); color:#000;}
-    .btn-gold:hover{background:#e6b800;}
+    .btn-gold{background:var(--seku-gold); color:#000;}
+    .btn-gold:hover{background:#b8860b; color:white;}
     .btn-secondary{background:#6c757d;}
     .btn-secondary:hover{background:#5a6268;}
     .small-note{font-size:12px; text-align:center; margin-top:12px; color:#666; line-height:1.5;}
-
     .dashboard-header {
         text-align: center;
         margin-bottom: 35px;
         padding-bottom: 20px;
-        border-bottom: 2px solid var(--mu-gold);
+        border-bottom: 2px solid var(--seku-gold);
     }
     .dashboard-logo {
         width: 110px;
@@ -109,7 +122,7 @@
         display: inline-block;
     }
     .dashboard-header h2 {
-        color: var(--mu-green);
+        color: var(--seku-green);
         border: none;
         padding: 0;
         margin: 0;
@@ -162,22 +175,22 @@
         background: linear-gradient(135deg, #c82333, #dc3545);
     }
     .stat-card.empty {
-        background: linear-gradient(135deg, var(--mu-green), #008040);
+        background: linear-gradient(135deg, var(--seku-green), #007030);
         animation: elitePulse 2.2s infinite ease-in-out;
     }
     @keyframes elitePulse {
-        0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,102,51,0.3); filter: brightness(1); }
-        50% { transform: scale(1.03); box-shadow: 0 6px 25px rgba(0,102,51,0.55); filter: brightness(1.12); }
-        100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,102,51,0.3); filter: brightness(1); }
+        0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,85,34,0.3); filter: brightness(1); }
+        50% { transform: scale(1.03); box-shadow: 0 6px 25px rgba(0,85,34,0.55); filter: brightness(1.12); }
+        100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,85,34,0.3); filter: brightness(1); }
     }
 
     .section-title {
-        color: var(--mu-green);
+        color: var(--seku-green);
         font-size: 22px;
         font-weight: 700;
         margin-bottom: 22px;
         padding-left: 12px;
-        border-left: 4px solid var(--mu-gold);
+        border-left: 4px solid var(--seku-gold);
     }
 
     .hostel-grid {
@@ -195,11 +208,11 @@
     }
     .hostel-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,102,51,0.12);
-        border-color: var(--mu-green);
+        box-shadow: 0 5px 15px rgba(0,85,34,0.12);
+        border-color: var(--seku-green);
     }
     .hostel-card.available {
-        border-left: 5px solid var(--mu-green);
+        border-left: 5px solid var(--seku-green);
     }
     .hostel-card.full {
         opacity: 0.7;
@@ -207,7 +220,7 @@
         border-left: 5px solid #999;
     }
     .hostel-card h4 {
-        color: var(--mu-green);
+        color: var(--seku-green);
         font-size: 19px;
         margin-bottom: 12px;
         font-weight: 700;
@@ -219,15 +232,15 @@
     }
     .vacancy {
         font-weight:700;
-        color:var(--mu-green);
+        color:var(--seku-green);
         font-size:15px;
         margin-top:8px;
     }
    
     .scroll-agreement{height:380px; overflow-y:auto; border:1px solid var(--border); padding:25px; background:#fafafa; margin:15px 0; border-radius:6px;}
-    .notice-box{background:#fffbe6; border-color:var(--mu-gold);}
-    .scroll-agreement h3{text-align:center; color:var(--mu-green); margin-bottom:18px; font-size:20px;}
-    .scroll-agreement h4{margin-top:18px; margin-bottom:8px; font-size:16px;}
+    .notice-box{background:var(--seku-light-gold); border-color:var(--seku-gold);}
+    .scroll-agreement h3{text-align:center; color:var(--seku-green); margin-bottom:18px; font-size:20px;}
+    .scroll-agreement h4{margin-top:18px; margin-bottom:8px; font-size:16px; color:var(--seku-green);}
     .scroll-agreement ul{margin-left:22px; margin-bottom:15px;}
     .scroll-agreement li{margin-bottom:8px; font-size:14px;}
     .agreement-checkbox{display:none; padding-top:15px; border-top:1px solid var(--border); margin-top:15px; animation: fadeIn 0.5s;}
@@ -243,24 +256,24 @@
     @keyframes spin{to{transform:rotate(360deg);}}
 
     .section-header {text-align:center; margin-bottom:28px;}
-    .section-header h2 {color:var(--mu-green); border:none; padding:0; margin:0; font-size:23px;}
+    .section-header h2 {color:var(--seku-green); border:none; padding:0; margin:0; font-size:23px;}
     .subtext {font-size:13px; color:#555; margin-top:6px;}
 
-    .fee-banner {background:linear-gradient(135deg, var(--mu-green), #008040); color:white; padding:22px; border-radius:8px; text-align:center; margin-bottom:28px;}
+    .fee-banner {background:linear-gradient(135deg, var(--seku-green), #007030); color:white; padding:22px; border-radius:8px; text-align:center; margin-bottom:28px;}
     .fee-label {font-size:15px; margin:0; opacity:0.9;}
     .fee-amount {font-size:34px; font-weight:800; margin:10px 0; letter-spacing:1px;}
     .fee-note {font-size:12px; opacity:0.85; margin:0; line-height:1.5;}
 
     .payment-card {background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:25px; margin-bottom:28px; box-shadow:0 2px 8px rgba(0,0,0,0.06);}
-    .card-title {color:var(--mu-green); margin-top:0; margin-bottom:15px; font-size:19px;}
+    .card-title {color:var(--seku-green); margin-top:0; margin-bottom:15px; font-size:19px;}
     .card-intro {text-align:center; color:#444; margin-bottom:20px; font-size:14px;}
 
-    .payee-details {background:#f8f9fa; border-radius:6px; padding:18px; margin-bottom:22px; border-left:4px solid var(--mu-gold);}
+    .payee-details {background:#f8f9fa; border-radius:6px; padding:18px; margin-bottom:22px; border-left:4px solid var(--seku-gold);}
     .detail-row {display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #e9ecef; font-size:14px;}
     .detail-row:last-child {border-bottom:none;}
     .detail-label {font-weight:600; color:#333;}
-    .detail-value {font-weight:700; color:var(--mu-green); cursor:pointer; transition:all 0.2s; padding:2px 6px; border-radius:4px;}
-    .detail-value:hover {background:var(--mu-light-gold);}
+    .detail-value {font-weight:700; color:var(--seku-green); cursor:pointer; transition:all 0.2s; padding:2px 6px; border-radius:4px;}
+    .detail-value:hover {background:var(--seku-light-green);}
     .copy-hint {font-size:11px; font-weight:normal; color:#666; margin-left:8px;}
 
     .steps-block {margin-bottom:18px;}
@@ -271,7 +284,7 @@
     .alert-note {background:#fff3cd; border:1px solid #ffeeba; border-radius:6px; padding:14px; font-size:13px; color:#856404; margin-top:18px; line-height:1.5;}
 
     .form-section {margin-bottom:22px;}
-    .form-title {color:var(--mu-green); margin-bottom:10px; font-size:18px;}
+    .form-title {color:var(--seku-green); margin-bottom:10px; font-size:18px;}
     .form-note {font-size:13px; color:#666; margin-bottom:18px;}
     .form-group {margin-bottom:16px;}
     .form-group label {font-weight:600; font-size:14px; margin-bottom:6px; display:block;}
@@ -279,35 +292,35 @@
     .form-row-flex {display:flex; gap:18px; flex-wrap:wrap;}
     .form-group.half {flex:1; min-width:220px;}
     .form-group input {padding:12px; font-size:14px; border:1px solid var(--border); border-radius:6px; transition:border 0.2s;}
-    .form-group input:focus {outline:none; border-color:var(--mu-green); box-shadow:0 0 0 3px rgba(0,102,51,0.1);}
+    .form-group input:focus {outline:none; border-color:var(--seku-green); box-shadow:0 0 0 3px rgba(0,85,34,0.1);}
 
     .button-group {display:flex; gap:15px; flex-wrap:wrap; margin-top:12px;}
-    .btn-primary {background:var(--mu-green); color:white; font-weight:bold; padding:14px; border:none; border-radius:6px; cursor:pointer; flex:1; min-width:230px; font-size:15px;}
-    .btn-primary:hover {background:var(--mu-dark-green);}
+    .btn-primary {background:var(--seku-green); color:white; font-weight:bold; padding:14px; border:none; border-radius:6px; cursor:pointer; flex:1; min-width:230px; font-size:15px;}
+    .btn-primary:hover {background:var(--seku-dark-green);}
     .btn-secondary {background:#6c757d; color:white; padding:14px; border:none; border-radius:6px; cursor:pointer; flex:1; min-width:130px; font-size:15px;}
     .btn-secondary:hover {background:#5a6268;}
 
     .confirmation-card {background:#ffffff; border:1px solid var(--border); border-radius:8px; padding:25px; margin-bottom:22px; box-shadow:0 2px 8px rgba(0,0,0,0.06);}
-    .confirmation-card h2 {color:var(--mu-green); border:none; padding:0; margin:0 0 15px 0; font-size:21px; text-align:center;}
+    .confirmation-card h2 {color:var(--seku-green); border:none; padding:0; margin:0 0 15px 0; font-size:21px; text-align:center;}
     .summary-row {display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f0f0f0; font-size:14px;}
     .summary-row:last-child {border-bottom:none;}
     .summary-row .label {font-weight:600; color:#444;}
     .summary-row .value {font-weight:500; color:#222; text-align:right; max-width:60%;}
     
-    .info-block {background:#e8f5e9; border-left:4px solid var(--mu-green); border-radius:6px; padding:18px; margin-bottom:22px; line-height:1.6;}
+    .info-block {background:#e8f5e9; border-left:4px solid var(--seku-green); border-radius:6px; padding:18px; margin-bottom:22px; line-height:1.6;}
     .action-steps {padding-left:28px; margin:0;}
     .action-steps li {margin-bottom:12px; line-height:1.6; font-size:14px;}
-    .action-steps strong {color:var(--mu-green);}
+    .action-steps strong {color:var(--seku-green);}
 
     .admin-table{width:100%; border-collapse:collapse; margin-top:20px; font-size:13px;}
     .admin-table th, .admin-table td{padding:10px; text-align:left; border-bottom:1px solid var(--border);}
-    .admin-table th{background:var(--mu-green); color:white; font-weight:600;}
-    .admin-table tr:hover{background:var(--mu-light-gold);}
+    .admin-table th{background:var(--seku-green); color:white; font-weight:600;}
+    .admin-table tr:hover{background:var(--seku-light-green);}
 
-    .footer{background:#ffffff; border-top:3px solid var(--mu-gold); padding:25px 20px; margin-top:30px; font-size:13px; color:#555;}
+    .footer{background:#ffffff; border-top:3px solid var(--seku-gold); padding:25px 20px; margin-top:30px; font-size:13px; color:#555;}
     .footer-content{max-width:1100px; margin:0 auto; text-align:center; line-height:1.7;}
-    .footer strong{color:var(--mu-green);}
-    .footer a{color:var(--mu-green); text-decoration:none; font-weight:600;}
+    .footer strong{color:var(--seku-green);}
+    .footer a{color:var(--seku-green); text-decoration:none; font-weight:600;}
 </style>
 </head>
 <body>
@@ -328,14 +341,17 @@
     </div>
 </div>
 
-<div class="nav-bar" id="navBar">
-    <div class="nav-content">
-        <a href="#" class="nav-btn" onclick="showDashboard(); return false;">🏠 Dashboard</a>
-        <a href="mailto:accommodation@seku.ac.ke" class="nav-btn">📞 Help Desk</a>
-        <a href="#" class="nav-btn logout" onclick="logout(); return false;">🚪 Logout</a>
+<!-- SIDEBAR OVERLAY & MENU -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-menu">
+        <a href="#" onclick="showBookingStatus(); return false;">📋 Booking Status</a>
+        <a href="#" onclick="showPaymentHistory(); return false;">🧾 Payment History</a>
+        <a href="#" onclick="showDashboard(); return false;">🏨 Browse Hostels</a>
+        <a href="mailto:accommodation@seku.ac.ke">📞 Help Desk</a>
+        <a href="#" onclick="logout(); return false;" class="logout">🚪 Logout</a>
     </div>
 </div>
-
 <div class="container" id="loginPage">
     <div class="login-box">
         <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="login-logo">
@@ -355,22 +371,46 @@
 </div>
 
 <div class="container hidden" id="dashboardPage">
+    <!-- HAMBURGER ONLY HERE: TOP-LEFT OF DASHBOARD WHITE SECTION -->
+<div class="dash-hamburger" id="dashHamburger">Dashboard</div>
+        <span></span><span></span><span></span>
+    </div>
+
     <div class="dashboard-header">
         <img src="seku.jpg" alt="South Eastern Kenya University Logo" class="dashboard-logo">
         <h2>Welcome, ACCOMMODATION PORTAL</h2> 
         <div class="student-info">Admission No: <strong id="studentAdm"></strong> | Programme: <strong>Undergraduate</strong></div>
     </div>
+
     <div class="stats">
         <div class="stat-card booked"><h3 id="bookedCount">3471</h3><p>Vacancies Booked</p></div>
         <div class="stat-card empty"><h3 id="emptyCount">449</h3><p>Vacancies Remaining</p></div>
     </div>
+
     <h3 class="section-title">Select Hostel with Available Space</h3>
     <div class="hostel-grid" id="hostelList"></div>
 </div>
 
+<!-- NEW PAGES FOR MENU ITEMS -->
+<div class="container hidden" id="bookingStatusPage">
+    <div class="dashboard-header">
+        <h2>Booking Status</h2>
+    </div>
+    <div id="statusContent"></div>
+    <button class="btn" onclick="showDashboard()">← Back to Hostels</button>
+</div>
+
+<div class="container hidden" id="paymentHistoryPage">
+    <div class="dashboard-header">
+        <h2>Payment History</h2>
+    </div>
+    <div id="payHistoryContent"></div>
+    <button class="btn" onclick="showDashboard()">← Back to Hostels</button>
+</div>
+
 <div class="container hidden" id="adminPage">
     <div class="dashboard-header">
-        <h2 style="color:var(--mu-gold); border:none; padding:0;">🔐 ADMIN DASHBOARD</h2>
+        <h2 style="color:var(--seku-gold); border:none; padding:0;">🔐 ADMIN DASHBOARD</h2>
         <p class="subtext">All Registered Students & Payment Records</p>
     </div>
     <div id="adminRecords"></div>
@@ -384,19 +424,19 @@
         <form onsubmit="nextBookingStep(2); return false;">
             <div class="scroll-agreement" id="rulesScroll" onscroll="checkScroll('rulesScroll','agreeRulesBox','btnRules')">
                 <h3>SOUTH EASTERN KENYA UNIVERSITY HOSTEL RULES & REGULATIONS 2026</h3>
-                <h4 style="color:var(--mu-green);">1. Eligibility & Allocation</h4>
+                <h4>1. Eligibility & Allocation</h4>
                 <ul>
                     <li>All regular students are eligible to apply for university accommodation.</li>
                     <li>Priority during high demand: Student who has booked for vacancy early on time.</li>
                     <li>Allocation is strictly first-come-first-served upon successful payment of booking fee.</li>
                 </ul>
-                <h4 style="color:var(--mu-green);">2. Booking Procedure</h4>
+                <h4>2. Booking Procedure</h4>
                 <ul>
                     <li>Non-refundable booking fee: Ksh 1,500 (deducted from semester accommodation fees).</li>
                     <li>Submit your application via this official portal only.</li>
                     <li>For inquiries: accommodation@seku.ac.ke or +254 758 903 000</li>
                 </ul>
-                <h4 style="color:var(--mu-green);">3. Safety & Conduct</h4>
+                <h4>3. Safety & Conduct</h4>
                 <ul>
                     <li>Respect all university staff and fellow students.</li>
                     <li>Report lost keys immediately: Replacement fee Ksh 500.</li>
@@ -405,13 +445,13 @@
                     <li>Quiet hours: 10:00PM – 6:00AM daily.</li>
                     <li>University not liable for personal property loss or damage.</li>
                 </ul>
-                <h4 style="color:var(--mu-green);">4. Prohibited Items</h4>
+                <h4>4. Prohibited Items</h4>
                 <ul>
                     <li>Unauthorized electrical appliances, heaters, cooking devices.</li>
                     <li>Alcohol, illicit drugs, weapons, and flammable materials.</li>
                     <li>Unapproved extension cables or power boards.</li>
                 </ul>
-                <h4 style="color:var(--mu-green);">5. Damages & Vacating</h4>
+                <h4>5. Damages & Vacating</h4>
                 <ul>
                     <li>All damages will be charged to the responsible student.</li>
                     <li>Rooms must be fully vacated by end of every semester.</li>
@@ -443,28 +483,28 @@
 
                 <p>Due to the high number of first-year students placed at South Eastern Kenya University through KUCCPS for the 2026/2027 Academic Year, the Accommodation Office wishes to notify all continuing students as follows:</p>
 
-                <h4 style="color:var(--mu-green); margin-top:18px;">1. Priority Allocation</h4>
+                <h4>1. Priority Allocation</h4>
                 <p>Hostel spaces are limited. The Accommodation Office under the leadership of Madam Maureen Kyalo will give priority in room allocation to students who have successfully booked their vacancies and paid the required booking fee.</p>
 
-                <h4 style="color:var(--mu-green); margin-top:18px;">2. Booking Procedure & Fee</h4>
+                <h4>2. Booking Procedure & Fee</h4>
                 <p>All students interested in residing in university hostels are required to book their space immediately by paying a non-refundable booking fee of <strong>Ksh 1,500</strong>.</p>
                 <p>This booking fee will be deducted from your total semester accommodation fee. The remaining balance of the semester accommodation fee must be cleared towards the end of the semester.</p>
 
-                <h4 style="color:var(--mu-green); margin-top:18px;">3. Reason for Staggered Payment</h4>
+                <h4>3. Reason for Staggered Payment</h4>
                 <p>This milestone decision to allow payment of the booking fee first, and the balance in the first week, has been made to assist students and parents/guardians who may experience financial difficulties in paying the full accommodation fee on the day of admission due to the high number of admissions this year.</p>
 
-                <h4 style="color:var(--mu-green); margin-top:18px;">4. Confirmation Process</h4>
+                <h4>4. Confirmation Process</h4>
                 <p>Upon successful payment of the Ksh 1,500 booking fee to the official Accommodation Office account under Madam Maureen Kyalo, you will receive an official email within <strong>12 working hours</strong> containing your Hostel Booking Confirmation Ticket.</p>
                 <p>This ticket must be printed and presented to the Accommodation Office for verification and room allocation during the admission day.</p>
 
-                <h4 style="color:var(--mu-green); margin-top:18px;">5. Important Reminder</h4>
+                <h4>5. Important Reminder</h4>
                 <p>Failure to book early may result in loss of university accommodation. Spaces will be allocated on a <strong>first-come, first-served basis</strong> until all vacancies are fully occupied.</p>
 
-                <p style="margin-top:20px; font-weight:700; text-align:center; color:var(--mu-green); font-size:15px;">Book your room now. Secure your space. Stay safe.</p>
+                <p style="margin-top:20px; font-weight:700; text-align:center; color:var(--seku-green); font-size:15px;">Book your room now. Secure your space. Stay safe.</p>
                 <p>Students are advised to complete this process early to avoid missing out on hostel space. The balance of your accommodation fees must be settled within the first week of reporting to the university.</p>
 
-                <div class="procedure-box" style="background:var(--mu-light-gold); padding:18px; border-radius:6px; margin:20px 0; border-left:4px solid var(--mu-gold);">
-                    <h4 style="color:var(--mu-green); margin-bottom:12px;">Official Procedure:</h4>
+                <div class="procedure-box" style="background:var(--seku-light-gold); padding:18px; border-radius:6px; margin:20px 0; border-left:4px solid var(--seku-gold);">
+                    <h4>Official Procedure:</h4>
                     <ol style="padding-left:25px;">
                         <li>Complete payment as instructed on the next page.</li>
                         <li>Submit payment verification details correctly.</li>
@@ -494,6 +534,7 @@
             <button type="button" class="btn btn-secondary" onclick="prevBookingStep(1)">← Back</button>
         </form>
     </div>
+
     <div id="bookStep3" class="hidden">
         <div class="section-header">
             <h2>Hostel Booking Payment & Verification</h2>
@@ -525,7 +566,7 @@
                 <h4>Step-by-Step Guide:</h4>
                 <ol class="steps-list">
                     <li>Go to M-Pesa Menu → Select <strong>Lipa na M-Pesa</strong> → <strong>Send Money</strong></li>
-                    <li>Enter phone number: <strong onclick="copyToClipboard('0727225650', this)" style="cursor:pointer; color:var(--mu-green);">0727225650 📋</strong></li>
+                    <li>Enter phone number: <strong onclick="copyToClipboard('0727225650', this)" style="cursor:pointer; color:var(--seku-green);">0727225650 📋</strong></li>
                     <li>Enter amount: <strong>1500</strong></li>
                     <li>Enter reference: <strong id="refNumber2"></strong></li>
                     <li>Enter your M-Pesa PIN and confirm transaction</li>
@@ -576,7 +617,7 @@
         <div class="alert alert-success">✅ Your Details Have Been Submitted Successfully!</div>
         <div class="confirmation-card">
             <h2>Booking Request Received</h2>
-            <hr style="border:1px solid var(--mu-gold); margin:15px 0;">
+            <hr style="border:1px solid var(--seku-gold); margin:15px 0;">
             <div class="summary-row"><span class="label">Selected Hostel:</span><span class="value" id="finalHostel"></span></div>
             <div class="summary-row"><span class="label">Admission Number:</span><span class="value" id="finalAdmission"></span></div>
             <div class="summary-row"><span class="label">Amount Paid:</span><span class="value">Ksh 1,500.00</span></div>
@@ -591,7 +632,7 @@
             </p>
         </div>
         <div class="steps-block">
-            <h3 style="color:var(--mu-green); margin-bottom:12px;">📋 Next Steps</h3>
+            <h3 style="color:var(--seku-green); margin-bottom:12px;">📋 Next Steps</h3>
             <ol class="action-steps">
                 <li><strong>Check your email:</strong> Inbox or Spam folder for your booking confirmation.</li>
                 <li><strong>Print your documents:</strong> Keep a printed copy of the clearance form.</li>
@@ -609,7 +650,6 @@
         © 2026 South Eastern Kenya University. All Rights Reserved. Official Secure Portal.</p>
     </div>
 </div>
-
 <script>
 // Load saved permanent records first
 let bookedStudents = JSON.parse(localStorage.getItem('bookedStudents')) || {};
@@ -626,17 +666,31 @@ let loggedInUser = null;
 let selectedHostel = null;
 const ADMIN_PASS = "123";
 
+// === HAMBURGER MENU FUNCTIONS ===
+const dashHamburger = document.getElementById('dashHamburger');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+function toggleSidebar(){
+    dashHamburger.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    sidebarOverlay.classList.toggle('active');
+}
+function closeSidebar(){
+    dashHamburger.classList.remove('active');
+    sidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+}
+if(dashHamburger){
+    dashHamburger.addEventListener('click', toggleSidebar);
+}
+
 // === Show/Hide Password ===
 function togglePassword(){
     const passInput = document.getElementById('password');
     const toggleText = document.querySelector('.toggle-pass');
-    if(passInput.type === "password"){
-        passInput.type = "text";
-        toggleText.innerText = "Hide";
-    } else {
-        passInput.type = "password";
-        toggleText.innerText = "Show";
-    }
+    passInput.type = passInput.type === "password" ? "text" : "password";
+    toggleText.innerText = toggleText.innerText === "Show" ? "Hide" : "Show";
 }
 
 // === PROFESSIONAL FORGOT PASSWORD ===
@@ -655,6 +709,7 @@ function adminAccess(){
 }
 
 function showAdminRecords(){
+    closeSidebar();
     document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
     document.getElementById('adminPage').classList.remove('hidden');
 
@@ -685,7 +740,7 @@ function showAdminRecords(){
             <td>${rec.faculty}</td>
             <td>${rec.hostel}</td>
             <td>${rec.mpesaCode}</td>
-            <td style="color:green; font-weight:bold;">✅ VERIFIED</td>
+            <td style="color:var(--seku-green); font-weight:bold;">✅ VERIFIED</td>
         </tr>`;
     });
     table += `</table>`;
@@ -744,7 +799,7 @@ function handleLogin(){
         return;
     }
     if(user !== pass){
-        alertDiv.innerHTML = "<div class='alert alert-error'>Username and password do not match</div>";
+        alertDiv.innerHTML = "<div class='alert alert-error'>Wrong username or password</div>";
         return;
     }
 
@@ -757,9 +812,9 @@ function handleLogin(){
 }
 
 function showDashboard(){
+    closeSidebar();
     document.getElementById('loginPage').classList.add('hidden');
     document.getElementById('dashboardPage').classList.remove('hidden');
-    document.getElementById('navBar').style.display = 'flex';
     
     document.getElementById('studentAdm').innerText = loggedInUser.adm;
     
@@ -784,12 +839,56 @@ function showDashboard(){
     document.getElementById('hostelList').innerHTML = html;
 }
 
+// === NEW MENU ITEM FUNCTIONS ===
+function showBookingStatus(){
+    closeSidebar();
+    document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+    document.getElementById('bookingStatusPage').classList.remove('hidden');
+    
+    const statusBox = document.getElementById('statusContent');
+    if(bookedStudents[loggedInUser.adm]){
+        statusBox.innerHTML = `
+        <div class="alert alert-success">✅ ALREADY BOOKED</div>
+        <div class="confirmation-card">
+            <div class="summary-row"><span class="label">Admission Number:</span><span class="value">${loggedInUser.adm}</span></div>
+            <div class="summary-row"><span class="label">Hostel Allocated:</span><span class="value">${bookedStudents[loggedInUser.adm].hostel}</span></div>
+            <div class="summary-row"><span class="label">Booking Date:</span><span class="value">${bookedStudents[loggedInUser.adm].time}</span></div>
+            <div class="summary-row"><span class="label">Status:</span><span class="value" style="color:var(--seku-green); font-weight:bold;">FULLY CONFIRMED</span></div>
+        </div>`;
+    } else {
+        statusBox.innerHTML = `
+        <div class="alert alert-error">❌ NOT BOOKED</div>
+        <p style="text-align:center; padding:15px; font-size:15px;">You have not yet completed payment and booking process.<br>Please go to "Browse Hostels" to select and book your preferred hostel.</p>`;
+    }
+}
+
+function showPaymentHistory(){
+    closeSidebar();
+    document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+    document.getElementById('paymentHistoryPage').classList.remove('hidden');
+    
+    const payBox = document.getElementById('payHistoryContent');
+    const myPayments = paymentRecords.filter(r => r.adm === loggedInUser.adm);
+    
+    if(myPayments.length === 0){
+        payBox.innerHTML = `<p style="text-align:center; padding:20px; color:#666;">No payment records found for your account.</p>`;
+        return;
+    }
+    
+    let table = `<table class="admin-table">
+        <tr><th>Date</th><th>Hostel</th><th>Transaction Code</th><th>Amount</th><th>Status</th></tr>`;
+    myPayments.forEach(p => {
+        table += `<tr><td>${p.time}</td><td>${p.hostel}</td><td>${p.mpesaCode}</td><td>Ksh 1,500</td><td style="color:var(--seku-green);">✅ VERIFIED</td></tr>`;
+    });
+    table += `</table>`;
+    payBox.innerHTML = table;
+}
+
 function startBooking(hostelId){
     selectedHostel = hostelsDB.find(h => h.id == hostelId);
     document.getElementById('dashboardPage').classList.add('hidden');
     document.getElementById('bookingPage').classList.remove('hidden');
     document.getElementById('selectedHostelName1').innerText = selectedHostel.name;
-    document.getElementById('selectedHostelName2').innerText = selectedHostel.name;
     document.getElementById('refNumber').innerText = loggedInUser.adm;
     document.getElementById('refNumber2').innerText = loggedInUser.adm;
     document.getElementById('agreeRulesBox').style.display = 'none';
@@ -877,9 +976,9 @@ function backToDashboard(){
 
 // === LOGOUT FUNCTION ===
 function logout(){
+    closeSidebar();
     if(confirm("CONFIRM LOGOUT\n\nAre you sure you wish to end your current session?\n\nUnsaved progress will be lost.")){
         loggedInUser = null;
-        document.getElementById('navBar').style.display = 'none';
         document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
         document.getElementById('loginPage').classList.remove('hidden');
         document.getElementById('username').value = "";
